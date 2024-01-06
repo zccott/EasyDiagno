@@ -39,7 +39,7 @@ class WelcomeScreen extends StatelessWidget {
                 height: height / 20,
               ),
               Container(
-                height: height / 2.5,
+                height: height / 3,
                 //color: Colors.amber,
                 child: SvgPicture.string(
                   svgimage!,
@@ -92,6 +92,30 @@ class WelcomeScreen extends StatelessWidget {
                     },
                     child: Text(
                       "Sign up",
+                      style: TextStyle(fontSize: 17),
+                    ),
+                    style: ButtonStyle(
+                        shape:
+                            MaterialStateProperty.all<RoundedRectangleBorder>(
+                                RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(30),
+                    ))),
+                  )),
+              SizedBox(
+                height: height / 50,
+              ),
+              Container(
+                  height: 55,
+                  width: width / 1.1,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.of(context)
+                          .push(MaterialPageRoute(builder: (ctx) {
+                        return SignupScreen();
+                      }));
+                    },
+                    child: Text(
+                      "Register as a Hospital",
                       style: TextStyle(fontSize: 17),
                     ),
                     style: ButtonStyle(
