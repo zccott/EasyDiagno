@@ -1,6 +1,6 @@
 import 'package:easydiagno/main.dart';
-import 'package:easydiagno/screens/Homescreen.dart';
-import 'package:easydiagno/screens/SignupScreen.dart';
+import 'package:easydiagno/screens/AppHome/Homescreen.dart';
+import 'package:easydiagno/screens/Login_Signup/SignupScreen.dart';
 import 'package:easydiagno/widgets/Textfields/CustomTextField.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -114,7 +114,9 @@ class _LoginScreenState extends State<LoginScreen> {
                             checkLogin(context);
                           }
                         },
-                        child: Text("Login", style: TextStyle(fontSize: 17)),
+                        child: Text("Login",
+                            style:
+                                TextStyle(fontSize: 17, color: Colors.white)),
                         style: ButtonStyle(
                           shape:
                               MaterialStateProperty.all<RoundedRectangleBorder>(
@@ -131,12 +133,14 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                     Row(
                       children: [
-                        SizedBox(
-                          width: width / 2.5,
-                          child: const Divider(
-                            height: 1,
-                            thickness: 1,
-                            color: Colors.black,
+                        Expanded(
+                          child: Container(
+                            //width: width * 0.35,
+                            child: const Divider(
+                              height: 1,
+                              thickness: 1,
+                              color: Colors.black,
+                            ),
                           ),
                         ),
                         const Padding(
@@ -145,13 +149,15 @@ class _LoginScreenState extends State<LoginScreen> {
                               "or",
                               style: TextStyle(fontSize: 18),
                             )),
-                        Container(
-                            width: width / 2.6,
-                            child: const Divider(
-                              height: 1,
-                              thickness: 1,
-                              color: Colors.black,
-                            )),
+                        Expanded(
+                          child: Container(
+                              width: width * 0.4,
+                              child: const Divider(
+                                height: 1,
+                                thickness: 1,
+                                color: Colors.black,
+                              )),
+                        ),
                       ],
                     ),
                     Row(
@@ -167,8 +173,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             },
                             child: const Text("Sign Up",
                                 style: TextStyle(
-                                  fontSize: 16,
-                                )))
+                                    fontSize: 16, color: Colors.black)))
                       ],
                     )
                   ],

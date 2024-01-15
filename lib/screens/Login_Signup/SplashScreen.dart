@@ -1,6 +1,6 @@
 import 'package:easydiagno/main.dart';
-import 'package:easydiagno/screens/Homescreen.dart';
-import 'package:easydiagno/screens/WelcomeScreen.dart';
+import 'package:easydiagno/screens/AppHome/Homescreen.dart';
+import 'package:easydiagno/screens/Login_Signup/WelcomeScreen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';

@@ -1,6 +1,6 @@
-import 'package:easydiagno/screens/ChatBotScreen.dart';
-import 'package:easydiagno/screens/ClinicHome.dart';
-import 'package:easydiagno/screens/WelcomeScreen.dart';
+import 'package:easydiagno/screens/AppHome/ChatBotScreen.dart';
+import 'package:easydiagno/screens/AppHome/ClinicHome.dart';
+import 'package:easydiagno/screens/Login_Signup/WelcomeScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

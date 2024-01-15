@@ -1,4 +1,4 @@
-import 'package:easydiagno/screens/SplashScreen.dart';
+import 'package:easydiagno/screens/Login_Signup/SplashScreen.dart';
 import 'package:flutter/material.dart';
 
 const SAVE_KEY = "userloggedin";
@@ -13,7 +13,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
-        theme: ThemeData.light(),
+        theme: ThemeData(primaryColor: Colors.blue),
         //darkTheme: ThemeData.dark(),
         //themeMode: ThemeMode.system,
         home: SplashScreen());
