@@ -1,5 +1,3 @@
-// import 'package:easydiagno/screens/LoginScreen.dart';
-// import 'package:easydiagno/screens/SignupScreen.dart';
 import 'package:easydiagno/screens/HospitalRegistration/hospitalRegistration.dart';
 import 'package:easydiagno/screens/Login_Signup/LoginScreen.dart';
 import 'package:easydiagno/screens/Login_Signup/SignupScreen.dart';
@@ -24,14 +22,14 @@ class WelcomeScreen extends StatelessWidget {
               SizedBox(
                 height: height / 50,
               ),
-              Text(
+              const Text(
                 "Welcome",
                 style: TextStyle(fontSize: 35, fontWeight: FontWeight.bold),
               ),
               SizedBox(
                 height: height / 50,
               ),
-              Text(
+              const Text(
                 "Welcome to Easy Diagno, your reliable partner in health!",
                 style: TextStyle(
                   fontSize: 18,
@@ -62,10 +60,6 @@ class WelcomeScreen extends StatelessWidget {
                           return LoginScreen();
                         }));
                       },
-                      child: Text(
-                        "Login",
-                        style: TextStyle(fontSize: 17, color: Colors.black),
-                      ),
                       style: ButtonStyle(
                         backgroundColor: MaterialStatePropertyAll(Colors.white),
                         shape:
@@ -73,12 +67,16 @@ class WelcomeScreen extends StatelessWidget {
                                 RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(30),
                         )),
-                        side: MaterialStatePropertyAll(
+                        side: const MaterialStatePropertyAll(
                           BorderSide(
                               color: Colors.black,
                               width: 1,
                               style: BorderStyle.solid),
                         ),
+                      ),
+                      child: Text(
+                        "Login",
+                        style: TextStyle(fontSize: 17, color: Colors.black),
                       ))),
               SizedBox(
                 height: height / 50,
@@ -93,43 +91,32 @@ class WelcomeScreen extends StatelessWidget {
                         return SignupScreen();
                       }));
                     },
-                    child: Text(
-                      "Sign up",
-                      style: TextStyle(fontSize: 17, color: Colors.black),
-                    ),
                     style: ButtonStyle(
-                        backgroundColor: MaterialStatePropertyAll(
-                            Color.fromARGB(255, 89, 171, 239)),
+                        backgroundColor:
+                            const MaterialStatePropertyAll(Colors.blue),
                         shape:
                             MaterialStateProperty.all<RoundedRectangleBorder>(
                                 RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(30),
                         ))),
+                    child: const Text(
+                      "Sign up",
+                      style: TextStyle(fontSize: 17, color: Colors.white),
+                    ),
                   )),
               SizedBox(
                 height: height / 50,
               ),
-              Container(
-                  height: 55,
-                  width: width / 1.1,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      Navigator.of(context)
-                          .push(MaterialPageRoute(builder: (ctx) {
-                        return HospitalRegistration();
-                      }));
-                    },
-                    child: Text(
-                      "Register as a Hospital",
-                      style: TextStyle(fontSize: 17, color: Colors.black),
-                    ),
-                    style: ButtonStyle(
-                        backgroundColor: MaterialStatePropertyAll(Colors.blue),
-                        shape:
-                            MaterialStateProperty.all<RoundedRectangleBorder>(
-                                RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(30),
-                        ))),
+              TextButton(
+                  onPressed: () {
+                    Navigator.of(context)
+                        .push(MaterialPageRoute(builder: (ctx) {
+                      return HospitalRegistration();
+                    }));
+                  },
+                  child: const Text(
+                    "Register as a hospital",
+                    style: TextStyle(color: Colors.blue, fontSize: 16),
                   ))
             ],
           ),

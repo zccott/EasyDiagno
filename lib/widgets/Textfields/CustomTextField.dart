@@ -11,18 +11,14 @@ Widget buildTextField(
     String? Function(String?)? validator) {
   //final height = MediaQuery.of(context).size.height;
   //final width = MediaQuery.of(context).size.width;
-  return Column(
-    children: [
-      TextFormField(
-          validator: validator,
-          controller: controller,
-          obscureText: obscureText,
-          decoration: InputDecoration(
-            labelText: labelText,
-            border: OutlineInputBorder(borderRadius: BorderRadius.circular(15)),
-            suffixIcon: IconButton,
-            prefixIcon: Icon,
-          )),
-    ],
-  );
+  return TextFormField(
+      validator: validator,
+      controller: controller,
+      obscureText: obscureText,
+      decoration: InputDecoration(
+        labelText: labelText,
+        border: OutlineInputBorder(borderRadius: BorderRadius.circular(15)),
+        suffixIcon: IconButton,
+        prefixIcon: Icon,
+      ));
 }

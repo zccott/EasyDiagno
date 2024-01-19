@@ -124,7 +124,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             borderRadius: BorderRadius.circular(15.0),
                           )),
                           backgroundColor:
-                              MaterialStateProperty.all(Colors.black),
+                              MaterialStateProperty.all(Colors.blue),
                         ),
                       ),
                     ),
@@ -173,7 +173,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             },
                             child: const Text("Sign Up",
                                 style: TextStyle(
-                                    fontSize: 16, color: Colors.black)))
+                                    fontSize: 16, color: Colors.blue)))
                       ],
                     )
                   ],

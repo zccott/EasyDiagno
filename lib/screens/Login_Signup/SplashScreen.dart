@@ -1,7 +1,6 @@
 import 'package:easydiagno/main.dart';
 import 'package:easydiagno/screens/AppHome/Homescreen.dart';
 import 'package:easydiagno/screens/Login_Signup/WelcomeScreen.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -36,7 +35,7 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   Future<void> gotoWelcome(context) async {
-    await Future.delayed(Duration(seconds: 6));
+    await Future.delayed(Duration(seconds: 8));
     Navigator.of(context).push(MaterialPageRoute(builder: (context) {
       return WelcomeScreen();
     }));

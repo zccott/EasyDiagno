@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "262318724945",
+    "project_id": "easydiagno-3d36c",
+    "storage_bucket": "easydiagno-3d36c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:262318724945:android:6efefc59e65b928625a570",
+        "android_client_info": {
+          "package_name": "com.example.easydiagno"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBVBdpK-LsPKpQ2sY5oXL4wrm5H7b5I7O0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

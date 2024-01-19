@@ -1,5 +1,7 @@
 import 'package:easydiagno/screens/Login_Signup/LoginScreen.dart';
 import 'package:easydiagno/widgets/Textfields/customTextField.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -15,6 +17,47 @@ class _SignupScreenState extends State<SignupScreen> {
   final email_controller_signup = TextEditingController();
   final password_controller_signup1 = TextEditingController();
   final password_controller_signup2 = TextEditingController();
+
+  //registration checking using firebase
+  RegistrationCheck() async {
+    try {
+      final userAuth = await FirebaseAuth.instance
+          .createUserWithEmailAndPassword(
+              email: email_controller_signup.text,
+              password: password_controller_signup1.text);
+      userAuth.user!.sendEmailVerification();
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text("Registered successfully"),
+        backgroundColor: Colors.blue,
+        behavior: SnackBarBehavior.floating,
+        margin: EdgeInsets.all(10),
+        duration: Duration(seconds: 5),
+      ));
+      Navigator.of(context)
+          .pushReplacement(MaterialPageRoute(builder: (context) {
+        return LoginScreen();
+      }));
+      //print("successfully registered");
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'email-already-in-use') {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text("Email already Exists"),
+          backgroundColor: Colors.red,
+          behavior: SnackBarBehavior.floating,
+          margin: EdgeInsets.all(10),
+          duration: Duration(seconds: 8),
+        ));
+        print("email already regsitered");
+      }
+      print(e.code);
+    }
+  }
+
+  //email validation
+  bool isValidEmail(String email) {
+    return RegExp(r'^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$')
+        .hasMatch(email);
+  }
 
   bool passwordVisible1 = true;
   bool passwordVisible2 = true;
@@ -70,6 +113,8 @@ class _SignupScreenState extends State<SignupScreen> {
                     (value) {
                       if (value == "") {
                         return "Field can't be empty";
+                      } else if (value!.length < 3) {
+                        return "Name must have altleast 5 characters";
                       }
                       return null;
                     },
@@ -87,6 +132,8 @@ class _SignupScreenState extends State<SignupScreen> {
                     (value) {
                       if (value == "") {
                         return "Field can't be empty";
+                      } else if (isValidEmail(value!) == false) {
+                        return "enter a valid email";
                       }
                       return null;
                     },
@@ -112,6 +159,8 @@ class _SignupScreenState extends State<SignupScreen> {
                     (value) {
                       if (value == "") {
                         return "Field can't be empty";
+                      } else if (value!.length < 6) {
+                        return "password must contain atleast 6 characters";
                       }
                       return null;
                     },
@@ -137,6 +186,9 @@ class _SignupScreenState extends State<SignupScreen> {
                     (value) {
                       if (value == "") {
                         return "Field can't be empty";
+                      } else if (password_controller_signup1.text !=
+                          password_controller_signup2.text) {
+                        return "Password should be same";
                       }
                       return null;
                     },
@@ -149,7 +201,9 @@ class _SignupScreenState extends State<SignupScreen> {
                     width: double.infinity,
                     child: ElevatedButton(
                       onPressed: () {
-                        if (_formkey.currentState!.validate()) {}
+                        if (_formkey.currentState!.validate()) {
+                          RegistrationCheck();
+                        }
                       },
                       style: ButtonStyle(
                         shape:
@@ -157,8 +211,7 @@ class _SignupScreenState extends State<SignupScreen> {
                                 RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(15.0),
                         )),
-                        backgroundColor:
-                            MaterialStateProperty.all(Colors.black),
+                        backgroundColor: MaterialStateProperty.all(Colors.blue),
                       ),
                       child: Text(
                         "Sign up",
@@ -207,7 +260,7 @@ class _SignupScreenState extends State<SignupScreen> {
                           },
                           child: const Text("Login",
                               style:
-                                  TextStyle(fontSize: 16, color: Colors.black)))
+                                  TextStyle(fontSize: 16, color: Colors.blue)))
                     ],
                   )
                 ],
