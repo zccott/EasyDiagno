@@ -2,7 +2,7 @@ import 'package:easydiagno/screens/Login_Signup/SplashScreen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
-const SAVE_KEY = "userloggedin";
+// const SAVE_KEY = "userloggedin";
 void main() async {
   await WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(

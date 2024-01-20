@@ -1,4 +1,4 @@
-import 'package:easydiagno/Models/regscreen2/specialisationModel.dart';
+import 'package:easydiagno/Models/HospitalModel/regscreen2/specialisationModel.dart';
 import 'package:flutter/material.dart';
 
 ValueNotifier<List<String>> checkedTitles = ValueNotifier([]);

@@ -1,6 +1,6 @@
-import 'package:easydiagno/Models/regscreen1/basicdetailsModel.dart';
-import 'package:easydiagno/Models/regscreen2/addDoctorModel.dart';
-import 'package:easydiagno/Models/regscreen2/specialisationModel.dart';
+import 'package:easydiagno/Models/HospitalModel/regscreen1/basicdetailsModel.dart';
+import 'package:easydiagno/Models/HospitalModel/regscreen2/specialisationModel.dart';
+import 'package:easydiagno/screens/HospitalRegistration/Registration2/widgets/addDoctorsection.dart';
 
 class HospitalRegistration {
   final Reg1Data reg1data;

@@ -1,7 +1,8 @@
+import 'package:easydiagno/Models/UserModel/userRegistration.dart';
+import 'package:easydiagno/Services/UserModule/userRegRepo.dart';
 import 'package:easydiagno/screens/Login_Signup/LoginScreen.dart';
 import 'package:easydiagno/widgets/Textfields/customTextField.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -26,6 +27,8 @@ class _SignupScreenState extends State<SignupScreen> {
               email: email_controller_signup.text,
               password: password_controller_signup1.text);
       userAuth.user!.sendEmailVerification();
+      await apiRequest();
+
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text("Registered successfully"),
         backgroundColor: Colors.blue,
@@ -270,5 +273,14 @@ class _SignupScreenState extends State<SignupScreen> {
         ),
       )),
     );
+  }
+
+  apiRequest() {
+    final details = UserRegistrationModel(
+        email: email_controller_signup.text,
+        password: password_controller_signup1.text,
+        name: username_controller_signup.text);
+
+    userRegistrationApi(details);
   }
 }

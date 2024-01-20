@@ -2,7 +2,6 @@ import 'package:easydiagno/screens/AppHome/ChatBotScreen.dart';
 import 'package:easydiagno/screens/AppHome/ClinicHome.dart';
 import 'package:easydiagno/screens/Login_Signup/WelcomeScreen.dart';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -47,7 +46,11 @@ class HomeScreen extends StatelessWidget {
                 padding: const EdgeInsets.only(right: 10),
                 child: IconButton(
                   onPressed: () {
-                    signOut(context);
+                    //signOut(context);
+                    Navigator.of(context).pushAndRemoveUntil(
+                        MaterialPageRoute(builder: (context) {
+                      return WelcomeScreen();
+                    }), (route) => false);
                   },
                   icon: Icon(Icons.logout),
                 ),
@@ -58,12 +61,12 @@ class HomeScreen extends StatelessWidget {
         )));
   }
 
-  signOut(BuildContext context) async {
-    final _sharedprefs = await SharedPreferences.getInstance();
-    await _sharedprefs.clear();
-    Navigator.of(context).pushAndRemoveUntil(
-        MaterialPageRoute(builder: (context) {
-      return WelcomeScreen();
-    }), (route) => false);
-  }
+  // signOut(BuildContext context) async {
+  //   final _sharedprefs = await SharedPreferences.getInstance();
+  //   await _sharedprefs.clear();
+  //   Navigator.of(context).pushAndRemoveUntil(
+  //       MaterialPageRoute(builder: (context) {
+  //     return WelcomeScreen();
+  //   }), (route) => false);
+  // }
 }

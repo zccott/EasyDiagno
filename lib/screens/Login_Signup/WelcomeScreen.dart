@@ -19,9 +19,9 @@ class WelcomeScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              SizedBox(
-                height: height / 50,
-              ),
+              // SizedBox(
+              //     //height: height / 50,
+              //     ),
               const Text(
                 "Welcome",
                 style: TextStyle(fontSize: 35, fontWeight: FontWeight.bold),
@@ -37,10 +37,10 @@ class WelcomeScreen extends StatelessWidget {
                 textAlign: TextAlign.center,
               ),
               SizedBox(
-                height: height / 20,
+                height: 30,
               ),
               Container(
-                height: height / 3,
+                height: height / 4,
                 //color: Colors.amber,
                 child: SvgPicture.string(
                   svgimage!,

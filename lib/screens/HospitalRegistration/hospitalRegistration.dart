@@ -1,7 +1,7 @@
 import 'package:csc_picker/csc_picker.dart';
 import 'package:easydiagno/Constants/Colors.dart';
 import 'package:easydiagno/Constants/constants.dart';
-import 'package:easydiagno/Models/regscreen1/basicdetailsModel.dart';
+import 'package:easydiagno/Models/HospitalModel/regscreen1/basicdetailsModel.dart';
 import 'package:easydiagno/screens/HospitalRegistration/Registration2/registratinScreen2.dart';
 import 'package:flutter/material.dart';
 

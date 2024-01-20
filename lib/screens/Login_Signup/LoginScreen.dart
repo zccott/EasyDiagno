@@ -1,10 +1,8 @@
-import 'package:easydiagno/main.dart';
-import 'package:easydiagno/screens/AppHome/Homescreen.dart';
 import 'package:easydiagno/screens/Login_Signup/SignupScreen.dart';
 import 'package:easydiagno/widgets/Textfields/CustomTextField.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginScreen extends StatefulWidget {
   LoginScreen({super.key});
@@ -15,10 +13,26 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   final emailController = TextEditingController();
-
   final passworController = TextEditingController();
-
   bool passwordVisible = true;
+
+//Firebase login
+  loginCheck() async {
+    try {
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
+          email: emailController.text, password: passworController.text);
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'invalid-credential') {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            content: Text("Invalid Credentials"),
+            backgroundColor: Colors.red,
+            behavior: SnackBarBehavior.floating,
+            margin: EdgeInsets.all(10),
+            duration: Duration(seconds: 8)));
+      }
+      //print("Error :    ---- ${e.code}");
+    }
+  }
 
   final _formkey = GlobalKey<FormState>();
   final String? svgimage =
@@ -111,7 +125,8 @@ class _LoginScreenState extends State<LoginScreen> {
                       child: ElevatedButton(
                         onPressed: () {
                           if (_formkey.currentState!.validate()) {
-                            checkLogin(context);
+                            //checkLogin(context);
+                            loginCheck();
                           }
                         },
                         child: Text("Login",
@@ -186,21 +201,21 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  void checkLogin(BuildContext context) async {
-    if (emailController.text == passworController.text) {
-      final _sharedprefs = await SharedPreferences.getInstance();
-      _sharedprefs.setBool(SAVE_KEY, true);
-      Navigator.of(context).pushAndRemoveUntil(
-          MaterialPageRoute(builder: (context) {
-        return HomeScreen();
-      }), (route) => false);
-    } else {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text("Invalid username or password"),
-        backgroundColor: Colors.red,
-        behavior: SnackBarBehavior.floating,
-        margin: EdgeInsets.all(10),
-      ));
-    }
-  }
+  // void checkLogin(BuildContext context) async {
+  //   if (emailController.text == passworController.text) {
+  //     final _sharedprefs = await SharedPreferences.getInstance();
+  //     _sharedprefs.setBool(SAVE_KEY, true);
+  //     Navigator.of(context).pushAndRemoveUntil(
+  //         MaterialPageRoute(builder: (context) {
+  //       return HomeScreen();
+  //     }), (route) => false);
+  //   } else {
+  //     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+  //       content: Text("Invalid username or password"),
+  //       backgroundColor: Colors.red,
+  //       behavior: SnackBarBehavior.floating,
+  //       margin: EdgeInsets.all(10),
+  //     ));
+  //   }
+  // }
 }

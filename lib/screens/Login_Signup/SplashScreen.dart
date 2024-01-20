@@ -1,8 +1,5 @@
-import 'package:easydiagno/main.dart';
-import 'package:easydiagno/screens/AppHome/Homescreen.dart';
 import 'package:easydiagno/screens/Login_Signup/WelcomeScreen.dart';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -15,7 +12,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     // TODO: implement initState
-    CheckUserLoggedIn(context);
+    gotoWelcome(context);
     super.initState();
   }
 
@@ -41,15 +38,15 @@ class _SplashScreenState extends State<SplashScreen> {
     }));
   }
 
-  Future<void> CheckUserLoggedIn(BuildContext context) async {
-    await gotoWelcome(context);
-    final _sharedprefs = await SharedPreferences.getInstance();
-    final _userloggedin = _sharedprefs.getBool(SAVE_KEY);
-    if (_userloggedin == null || _userloggedin == false) {
-    } else {
-      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (ctx) {
-        return HomeScreen();
-      }));
-    }
-  }
+  // Future<void> CheckUserLoggedIn(BuildContext context) async {
+  //   await
+  //   final _sharedprefs = await SharedPreferences.getInstance();
+  //   final _userloggedin = _sharedprefs.getBool(SAVE_KEY);
+  //   if (_userloggedin == null || _userloggedin == false) {
+  //   } else {
+  //     Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (ctx) {
+  //       return HomeScreen();
+  //     }));
+  //   }
+  // }
 }

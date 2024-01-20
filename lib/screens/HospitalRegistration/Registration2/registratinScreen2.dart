@@ -1,6 +1,6 @@
 import 'package:easydiagno/Constants/Colors.dart';
 import 'package:easydiagno/Constants/constants.dart';
-import 'package:easydiagno/Models/regscreen1/basicdetailsModel.dart';
+import 'package:easydiagno/Models/HospitalModel/regscreen1/basicdetailsModel.dart';
 import 'package:easydiagno/screens/HospitalRegistration/RegisteredScreen.dart';
 import 'package:easydiagno/screens/HospitalRegistration/Registration2/widgets/addDoctorsection.dart';
 import 'package:easydiagno/screens/HospitalRegistration/Registration2/widgets/specializationsection.dart';
