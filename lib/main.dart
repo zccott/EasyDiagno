@@ -26,8 +26,8 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(primaryColor: Colors.blue),
         //darkTheme: ThemeData.dark(),
         //themeMode: ThemeMode.system,
-        home: HomeScreen()
-        //SplashScreen()
-        );
+        home:
+            //HomeScreen()
+            HomeScreen());
   }
 }

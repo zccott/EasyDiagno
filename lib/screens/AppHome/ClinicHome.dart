@@ -1,3 +1,4 @@
+import 'package:easydiagno/screens/AppHome/ClinicPage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -81,37 +82,45 @@ class _ClinicHomeState extends State<ClinicHome> {
               child: Container(
                 child: ListView.separated(
                     itemBuilder: (context, index) {
-                      return Row(
-                        children: [
-                          Container(
-                            child: Image(
-                                fit: BoxFit.fill,
-                                image: AssetImage('assets/images/bg.jpg')),
-                            color: Colors.black,
-                            height: height / 5.5,
-                            width: width / 2.5,
-                          ),
-                          Expanded(
-                            child: Container(
-                              // color: Colors.amber,
+                      return GestureDetector(
+                        onTap: () {
+                          Navigator.of(context)
+                              .push(MaterialPageRoute(builder: (ctx) {
+                            return ClinicPage();
+                          }));
+                        },
+                        child: Row(
+                          children: [
+                            Container(
+                              child: Image(
+                                  fit: BoxFit.fill,
+                                  image: AssetImage('assets/images/bg.jpg')),
+                              color: Colors.black,
                               height: height / 5.5,
-                              child: Column(
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Align(
-                                      alignment: Alignment.centerLeft,
-                                      child: Text(
-                                        hospital_names[index],
-                                        style: TextStyle(fontSize: 18),
-                                      ),
-                                    ),
-                                  )
-                                ],
-                              ),
+                              width: width / 2.5,
                             ),
-                          )
-                        ],
+                            Expanded(
+                              child: Container(
+                                // color: Colors.amber,
+                                height: height / 5.5,
+                                child: Column(
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Align(
+                                        alignment: Alignment.centerLeft,
+                                        child: Text(
+                                          hospital_names[index],
+                                          style: TextStyle(fontSize: 18),
+                                        ),
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
                       );
                     },
                     separatorBuilder: (context, index) {
