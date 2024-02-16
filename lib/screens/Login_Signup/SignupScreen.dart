@@ -29,7 +29,7 @@ class _SignupScreenState extends State<SignupScreen> {
       userAuth.user!.sendEmailVerification();
       await apiRequest();
 
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
         content: Text("Registered successfully"),
         backgroundColor: Colors.blue,
         behavior: SnackBarBehavior.floating,
@@ -43,7 +43,7 @@ class _SignupScreenState extends State<SignupScreen> {
       //print("successfully registered");
     } on FirebaseAuthException catch (e) {
       if (e.code == 'email-already-in-use') {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
           content: Text("Email already Exists"),
           backgroundColor: Colors.red,
           behavior: SnackBarBehavior.floating,
@@ -122,7 +122,7 @@ class _SignupScreenState extends State<SignupScreen> {
                       return null;
                     },
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
                   buildTextField(
@@ -141,7 +141,7 @@ class _SignupScreenState extends State<SignupScreen> {
                       return null;
                     },
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
                   buildTextField(
