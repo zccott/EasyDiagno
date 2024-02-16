@@ -13,6 +13,13 @@ class SignupScreen extends StatefulWidget {
   State<SignupScreen> createState() => _SignupScreenState();
 }
 
+  //email validation
+  bool isValidEmail(String email) {
+    return RegExp(r'^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$')
+        .hasMatch(email);
+  }
+
+
 class _SignupScreenState extends State<SignupScreen> {
   final username_controller_signup = TextEditingController();
   final email_controller_signup = TextEditingController();
@@ -54,12 +61,6 @@ class _SignupScreenState extends State<SignupScreen> {
       }
       print(e.code);
     }
-  }
-
-  //email validation
-  bool isValidEmail(String email) {
-    return RegExp(r'^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$')
-        .hasMatch(email);
   }
 
   bool passwordVisible1 = true;

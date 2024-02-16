@@ -1,5 +1,6 @@
 import 'package:easydiagno/screens/AppHome/ChatBotScreen.dart';
 import 'package:easydiagno/screens/AppHome/ClinicHome.dart';
+import 'package:easydiagno/screens/AppHome/ProfileScreen.dart';
 import 'package:easydiagno/screens/Login_Signup/WelcomeScreen.dart';
 import 'package:flutter/material.dart';
 
@@ -17,8 +18,11 @@ class HomeScreen extends StatelessWidget {
               padding: const EdgeInsets.all(8.0),
               child: ListView(children: [
                 ListTile(
-                  leading: Icon(Icons.person),
+                  leading: IconButton(onPressed: (){
+                    Navigator.of(context).push(MaterialPageRoute(builder: (index)=>ProfileScreen()));
+                  }, icon: Icon(Icons.person)),
                   title: Text("profile"),
+                  
                 ),
                 ListTile(
                     title: Text("Settings"), leading: Icon(Icons.settings)),

@@ -1,3 +1,6 @@
+import 'package:easydiagno/Models/UserModel/userLogin.dart';
+import 'package:easydiagno/Services/UserModule/userLogin.dart';
+import 'package:easydiagno/screens/AppHome/Homescreen.dart';
 import 'package:easydiagno/screens/Login_Signup/SignupScreen.dart';
 import 'package:easydiagno/widgets/Textfields/CustomTextField.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -21,6 +24,13 @@ class _LoginScreenState extends State<LoginScreen> {
     try {
       await FirebaseAuth.instance.signInWithEmailAndPassword(
           email: emailController.text, password: passworController.text);
+      await loginCheck();
+
+       Navigator.of(context)
+          .pushReplacement(MaterialPageRoute(builder: (context) {
+        return HomeScreen();
+      }));
+
     } on FirebaseAuthException catch (e) {
       if (e.code == 'invalid-credential') {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
@@ -85,7 +95,11 @@ class _LoginScreenState extends State<LoginScreen> {
                         Icon(Icons.mail), (value) {
                       if (value == "") {
                         return "Field can't be empty";
-                      } else {
+                      }
+                      else if(isValidEmail(value!) == false){
+                        return "Enter a valid email";
+                      }
+                       else {
                         return null;
                       }
                     }),
@@ -109,7 +123,11 @@ class _LoginScreenState extends State<LoginScreen> {
                         Icon(Icons.lock), (value) {
                       if (value == "") {
                         return "Field can't be empty";
-                      } else {
+                      } 
+                       else if (value!.length < 6) {
+                        return "password must contain atleast 6 characters";
+                      }
+                      else {
                         return null;
                       }
                     }),
@@ -201,21 +219,8 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  // void checkLogin(BuildContext context) async {
-  //   if (emailController.text == passworController.text) {
-  //     final _sharedprefs = await SharedPreferences.getInstance();
-  //     _sharedprefs.setBool(SAVE_KEY, true);
-  //     Navigator.of(context).pushAndRemoveUntil(
-  //         MaterialPageRoute(builder: (context) {
-  //       return HomeScreen();
-  //     }), (route) => false);
-  //   } else {
-  //     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-  //       content: Text("Invalid username or password"),
-  //       backgroundColor: Colors.red,
-  //       behavior: SnackBarBehavior.floating,
-  //       margin: EdgeInsets.all(10),
-  //     ));
-  //   }
-  // }
+  apiCall(){
+    final loginDetails = UserLoginmodel(email: emailController.text, password: passworController.text);
+    userLoginApi(loginDetails);
+  }
 }
