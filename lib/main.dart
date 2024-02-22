@@ -1,6 +1,7 @@
 import 'package:easydiagno/screens/AppHome/Homescreen.dart';
 import 'package:easydiagno/screens/AppHome/ProfileScreen.dart';
 import 'package:easydiagno/screens/Login_Signup/SplashScreen.dart';
+import 'package:easydiagno/ClinicPage.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
@@ -22,12 +23,14 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        debugShowCheckedModeBanner: false,
-        theme: ThemeData(primaryColor: Colors.blue),
-        //darkTheme: ThemeData.dark(),
-        //themeMode: ThemeMode.system,
-        home:
-            //HomeScreen()
-            HomeScreen());
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(primaryColor: Colors.blue),
+      //darkTheme: ThemeData.dark(),
+      //themeMode: ThemeMode.system,
+      home:
+          //HomeScreen()
+          //HomeScreen()
+          ClinicPage(),
+    );
   }
 }

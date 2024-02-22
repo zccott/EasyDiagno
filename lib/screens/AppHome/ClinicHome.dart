@@ -1,4 +1,4 @@
-import 'package:easydiagno/screens/AppHome/ClinicPage.dart';
+import 'package:easydiagno/screens/AppHome/ClinicPage1.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
