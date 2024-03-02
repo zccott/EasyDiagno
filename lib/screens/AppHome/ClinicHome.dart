@@ -1,4 +1,4 @@
-import 'package:easydiagno/screens/AppHome/ClinicPage1.dart';
+import 'package:easydiagno/screens/AppHome/ClinicPage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -13,12 +13,12 @@ class _ClinicHomeState extends State<ClinicHome> {
   String? categoryInitial;
 
   List<String> categoryList = [
-    'Allergy Immunology',
     'Anesthesiology',
     'Dermatology',
     'Emergency Medicine',
     'Endocrinology',
     'Neurology',
+    'General',
     'Gynecology',
     'Ophthalmology',
     'Orthopedics',

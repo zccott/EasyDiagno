@@ -31,7 +31,7 @@ class HomeScreen extends StatelessWidget {
                     onTap: () {
                       Navigator.of(context)
                           .push(MaterialPageRoute(builder: (ctx) {
-                        return const ProfileScreen();
+                        return ProfileScreen();
                       }));
                     },
                     child: const CircleAvatar(

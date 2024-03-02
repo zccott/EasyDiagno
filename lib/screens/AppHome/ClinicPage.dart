@@ -22,24 +22,34 @@ class ClinicPage extends StatelessWidget {
               height: 180,
               width: double.infinity,
               color: Colors.yellow,
+              child: Image.network(
+                'https://www.bestdocapp.com/wp-content/uploads/2022/07/BMH-Baby-Memorial-Hospital-Calicut..jpg',
+                fit: BoxFit.cover,
+              ),
             ),
             h15,
             Container(
               width: 300,
               height: 240,
               decoration: const BoxDecoration(
-                  color: Colors.red,
+                  //color: Colors.red,
                   borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(25),
                       topRight: Radius.circular(25))),
               child: Column(
                 children: [
+                  h10,
                   Container(
                     width: 300,
                     height: 135,
                     decoration: BoxDecoration(
                         color: Colors.green,
-                        borderRadius: BorderRadius.circular(25)),
+                        borderRadius: BorderRadius.circular(30),
+                        image: DecorationImage(
+                            fit: BoxFit.cover,
+                            image: NetworkImage(
+                              'https://i.stack.imgur.com/HILmr.png',
+                            ))),
                   ),
                   const Padding(
                     padding: EdgeInsets.only(
@@ -99,10 +109,10 @@ class ClinicPage extends StatelessWidget {
                   physics: NeverScrollableScrollPhysics(),
                   itemBuilder: (ctx, index) {
                     return Container(
-                      height: 300,
+                      height: 280,
                       width: double.infinity,
                       decoration: BoxDecoration(
-                          color: Colors.amber,
+                          color: Color.fromARGB(255, 220, 231, 232),
                           borderRadius: BorderRadius.circular(20)),
                       child: Padding(
                         padding:
@@ -111,7 +121,13 @@ class ClinicPage extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             const Center(
-                              child: Text("Category"),
+                              child: Text(
+                                "Category",
+                                style: TextStyle(
+                                    //color: Colors.white,
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold),
+                              ),
                             ),
                             h15,
                             Expanded(
@@ -119,12 +135,25 @@ class ClinicPage extends StatelessWidget {
                                 shrinkWrap: true,
                                 physics: const NeverScrollableScrollPhysics(),
                                 itemBuilder: (ctx, index) {
-                                  return const Text("halo");
+                                  return const Text(
+                                    "halo",
+                                    style: TextStyle(
+                                        //color: Colors.white,
+                                        ),
+                                  );
                                 },
-                                itemCount: 5,
+                                itemCount: 4,
                               ),
                             ),
-                            const Center(child: Text("Available days")),
+                            const Center(
+                                child: Text(
+                              "Available days",
+                              style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                                //color: Colors.white,
+                              ),
+                            )),
                             h10,
                             Expanded(
                               child: GridView.builder(
@@ -135,7 +164,12 @@ class ClinicPage extends StatelessWidget {
                                 shrinkWrap: true,
                                 physics: const NeverScrollableScrollPhysics(),
                                 itemBuilder: (ctx, index) {
-                                  return const Text("monday");
+                                  return const Text(
+                                    "monday",
+                                    style: TextStyle(
+                                        //color: Colors.white,
+                                        ),
+                                  );
                                 },
                                 itemCount: 7,
                               ),
@@ -150,7 +184,7 @@ class ClinicPage extends StatelessWidget {
                       height: 5,
                     );
                   },
-                  itemCount: 10),
+                  itemCount: 6),
             )
           ],
         ),
