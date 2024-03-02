@@ -1,3 +1,4 @@
+import 'package:easydiagno/screens/AdminModule/AdminHome.dart';
 import 'package:flutter/material.dart';
 
 class ProfileScreen extends StatelessWidget {
@@ -38,7 +39,12 @@ class ProfileScreenBody extends StatelessWidget {
                       ),
                     ),
                     TextButton.icon(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.of(context)
+                            .push(MaterialPageRoute(builder: (ctx) {
+                          return AdminHome();
+                        }));
+                      },
                       icon: Text(
                         'Edit',
                         style: TextStyle(fontSize: 15, color: Colors.white),
@@ -101,7 +107,10 @@ class ProfileScreenBody extends StatelessWidget {
                     onPressed: () {
                       isFieldVisible.value = !isFieldVisible.value;
                     },
-                    child: Text("Complete your profile"),
+                    child: Text(
+                      "Complete your profile",
+                      //style: TextStyle(color: Colors.black),
+                    ),
                   ),
                 ),
               ],

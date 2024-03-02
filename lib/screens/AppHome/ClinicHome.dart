@@ -18,7 +18,7 @@ class _ClinicHomeState extends State<ClinicHome> {
     'Emergency Medicine',
     'Endocrinology',
     'Neurology',
-    'General',
+    'General Physician',
     'Gynecology',
     'Ophthalmology',
     'Orthopedics',
