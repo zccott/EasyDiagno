@@ -1,5 +1,6 @@
 import 'package:easydiagno/screens/AppHome/Homescreen.dart';
 import 'package:easydiagno/screens/AppHome/ProfileScreen.dart';
+import 'package:easydiagno/screens/HospitalRegistration/hospitalHome.dart';
 import 'package:easydiagno/screens/Login_Signup/SplashScreen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -27,7 +28,9 @@ class MyApp extends StatelessWidget {
         //darkTheme: ThemeData.dark(),
         //themeMode: ThemeMode.system,
         home:
+            HospitalHome()
+            //SplashScreen()
             //HomeScreen()
-            HomeScreen());
+            );
   }
 }

@@ -1,9 +1,9 @@
 import 'package:easydiagno/Constants/Colors.dart';
 import 'package:easydiagno/Constants/constants.dart';
 import 'package:easydiagno/Models/HospitalModel/regscreen1/basicdetailsModel.dart';
-import 'package:easydiagno/screens/HospitalRegistration/RegisteredScreen.dart';
 import 'package:easydiagno/screens/HospitalRegistration/Registration2/widgets/addDoctorsection.dart';
 import 'package:easydiagno/screens/HospitalRegistration/Registration2/widgets/specializationsection.dart';
+import 'package:easydiagno/screens/HospitalRegistration/successfullyRegScreen.dart';
 //import 'package:easydiagno/screens/easydiagnoscreens/hospitalRegistration.dart';
 import 'package:flutter/material.dart';
 
@@ -68,7 +68,7 @@ class _RegScreen2State extends State<RegScreen2> {
                 onPressed: () async {
                   Navigator.of(context)
                       .push(MaterialPageRoute(builder: (context) {
-                    return RegistrationDoneScreen();
+                    return Successfullyregistered();
                   }));
                   // final a = await submit();
                   // print(a.reg1data);
