@@ -28,7 +28,7 @@ class _DoctorSectionState extends State<DoctorSection2> {
       appBar: AppBar(),
       body: ListView(
         children: [
-          for (Specialisation specialization in item)          
+          for (Specialisation specialization in item)
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Column(
@@ -45,11 +45,13 @@ class _DoctorSectionState extends State<DoctorSection2> {
               ),
             ),
           h15,
-          ElevatedButton(onPressed: () async{
-            print(widget.specialization);
-            print(allAddedDoctors);
-            await addDoctorApi(allAddedDoctors, widget.specialization);
-          }, child: Text("Submit"))
+          ElevatedButton(
+              onPressed: () async {
+                print(widget.specialization);
+                print(allAddedDoctors);
+                await addDoctorApi(allAddedDoctors, widget.specialization);
+              },
+              child: Text("Submit"))
         ],
       ),
     );
@@ -95,8 +97,11 @@ class _DocSubSectionGroupState extends State<DocSubSectionGroup> {
                 ),
                 IconButton(
                   onPressed: () {
+                    print(
+                        "Spec : ${widget.selected.specialisationid}, ${widget.selected.specialisationid}");
                     setState(() {
-                      doctorDetailsList.add(DoctorDetails(title: widget.selected.specialisation));
+                      doctorDetailsList.add(
+                          DoctorDetails(title: widget.selected.specialisation));
                     });
                   },
                   icon: Icon(
@@ -107,7 +112,10 @@ class _DocSubSectionGroupState extends State<DocSubSectionGroup> {
               ],
             ),
             for (var docDetails in doctorDetailsList)
-              DocSubSection(doctorDetails: docDetails),
+              DocSubSection(
+                doctorDetails: docDetails,
+                spec: widget.selected,
+              ),
           ],
         ),
       ),
@@ -116,9 +124,11 @@ class _DocSubSectionGroupState extends State<DocSubSectionGroup> {
 }
 
 class DocSubSection extends StatefulWidget {
+  final Specialisation spec;
   final DoctorDetails doctorDetails;
 
-  DocSubSection({Key? key, required this.doctorDetails}) : super(key: key);
+  DocSubSection({Key? key, required this.doctorDetails, required this.spec})
+      : super(key: key);
 
   @override
   State<DocSubSection> createState() => _DocSubSectionState();
@@ -129,6 +139,7 @@ class _DocSubSectionState extends State<DocSubSection> {
   final qualificationController = TextEditingController();
 
   Doctors d1 = Doctors(
+      id: '',
       specialisation: '',
       hospitalId: '',
       doctorName: '',
@@ -152,11 +163,11 @@ class _DocSubSectionState extends State<DocSubSection> {
                       decoration: InputDecoration(
                         hintText: 'Doctor Name',
                       ),
-                      controller: qualificationController,
+                      controller: doctornameController,
                     ),
                     TextFormField(
                       decoration: InputDecoration(hintText: 'Qualification'),
-                      controller: doctornameController,
+                      controller: qualificationController,
                     ),
                     h5,
                     Text(
@@ -173,7 +184,11 @@ class _DocSubSectionState extends State<DocSubSection> {
                       child: ElevatedButton(
                         onPressed: () async {
                           d1 = await Doctors(
-                              specialisation: '1',
+                              id: DateTime.now()
+                                  .microsecondsSinceEpoch
+                                  .toString(),
+                              specialisation:
+                                  widget.spec.specialisationid.toString(),
                               hospitalId: '1',
                               doctorName: doctornameController.text,
                               qualification: qualificationController.text,
@@ -261,6 +276,7 @@ class _DocSubSectionState extends State<DocSubSection> {
 
 class DoctorDetails {
   final String title;
+  int specId = 0;
   String doctorName = '';
   String qualification = '';
   List<String> selectedDays = [];

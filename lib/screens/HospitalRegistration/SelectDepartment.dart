@@ -60,7 +60,10 @@ class _CheckBoxWidgetState extends State<CheckBoxWidget3> {
               checkedSpecialisations.value = listtitles
                   .where((specialisation) => specialisation.selected)
                   .toList();
-              Navigator.of(context).push(MaterialPageRoute(builder: (context) => DoctorSection2(specialization: checkedSpecialisations.value),));
+              Navigator.of(context).push(MaterialPageRoute(
+                builder: (context) => DoctorSection2(
+                    specialization: checkedSpecialisations.value),
+              ));
               print(checkedSpecialisations.value[0].specialisationid);
               // Call a method or navigate to another screen passing the selected specialisations
             },
@@ -102,20 +105,25 @@ class _CheckBoxWidgetState extends State<CheckBoxWidget3> {
   }
 
   void getSpecialisations() async {
-    final response = await http.get(Uri.parse('$baseUrl/viewspecialisation'));
-    if (response.statusCode == 200) {
-      final List<dynamic> data = jsonDecode(response.body);
-      setState(() {
-        listtitles = data
-            .map((item) => Specialisation(
-                  description: item['description'],
-                  specialisation: item['specialisation'],
-                  specialisationid: item['specialisationid'],
-                ))
-            .toList();
-      });
-    } else {
-      throw Exception('Failed to load specialisations');
+    try {
+      final response = await http.get(Uri.parse('$baseUrl/viewspecialisation'));
+      print(response.body);
+      if (response.statusCode == 200) {
+        final List<dynamic> data = jsonDecode(response.body);
+        setState(() {
+          listtitles = data
+              .map((item) => Specialisation(
+                    description: item['description'],
+                    specialisation: item['specialisation'],
+                    specialisationid: item['specialisation_id'],
+                  ))
+              .toList();
+        });
+      } else {
+        print('Failed to load specialisations');
+      }
+    } catch (e) {
+      print("exceptin : $e");
     }
   }
 }

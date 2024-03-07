@@ -27,12 +27,13 @@ class _HospitalRegistrationState extends State<HospitalRegistration> {
 
   final TextEditingController _emailController = TextEditingController();
 
- // TextEditingController _phonenumberController = TextEditingController();
-  final TextEditingController _liscencenumberController = TextEditingController();
+  // TextEditingController _phonenumberController = TextEditingController();
+  final TextEditingController _liscencenumberController =
+      TextEditingController();
 
   final TextEditingController _addressLineController = TextEditingController();
 
-  final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _phoneController = TextEditingController();
 
   final TextEditingController _pinController = TextEditingController();
 
@@ -55,17 +56,15 @@ class _HospitalRegistrationState extends State<HospitalRegistration> {
     try {
       final userAuth = await FirebaseAuth.instance
           .createUserWithEmailAndPassword(
-              email: _emailController.text,
-              password: _passwordController.text);
+              email: _emailController.text, password: '123456');
       userAuth.user!.sendEmailVerification();
-     // await apiRequest();
-     //await userAuth.user!.reload();
-       showDialog(
-      context: context,
-      builder: (BuildContext context) {
-       return buildEmailVerificationDialog();
-      }
-    );
+      // await apiRequest();
+      //await userAuth.user!.reload();
+      showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return buildEmailVerificationDialog();
+          });
       //print("successfully registered");
     } on FirebaseAuthException catch (e) {
       if (e.code == 'email-already-in-use') {
@@ -84,78 +83,83 @@ class _HospitalRegistrationState extends State<HospitalRegistration> {
 
   @override
   Widget build(BuildContext context) {
-
-//Form Key    
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+//Form Key
+    final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
     return Scaffold(
       appBar: AppBar(),
-        body: SafeArea(
+      body: SafeArea(
         child: Form(
           key: _formKey,
           child: Padding(
             padding: const EdgeInsets.all(16.0),
             child: ListView(
               children: [
-
-                Text("Select Image",style: TextStyle(fontSize: 16),),
+                Text(
+                  "Select Image",
+                  style: TextStyle(fontSize: 16),
+                ),
                 h5,
                 ValueListenableBuilder(
                   valueListenable: isSel,
                   builder: (context, value, child) {
                     return Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                    Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
-                        IconButton(onPressed: () async{
-                          final result = await imagePicker.pickImage(
-                                          source: ImageSource.camera);                  
-                                      if (result != null) {
-                                        // Uint8List bytes = await result.readAsBytes();
-                                        // //imagebytes = base64Encode(bytes);
-                                        setState(() {
-                                          selectedFileName = result.name;
-                                          isFileSelected = true;
-                                          _imagePath = File(result.path);
-                                          
-                                        });
-                                      }                  
-                        }, icon: Icon(Icons.camera)),
-                        //h2,
-                        Text("Camera")
+                        Column(
+                          children: [
+                            IconButton(
+                                onPressed: () async {
+                                  final result = await imagePicker.pickImage(
+                                      source: ImageSource.camera);
+                                  if (result != null) {
+                                    // Uint8List bytes = await result.readAsBytes();
+                                    // //imagebytes = base64Encode(bytes);
+                                    setState(() {
+                                      selectedFileName = result.name;
+                                      isFileSelected = true;
+                                      _imagePath = File(result.path);
+                                    });
+                                  }
+                                },
+                                icon: Icon(Icons.camera)),
+                            //h2,
+                            Text("Camera")
+                          ],
+                        ),
+                        Column(
+                          children: [
+                            IconButton(
+                                onPressed: () async {
+                                  final result = await imagePicker.pickImage(
+                                      source: ImageSource.gallery);
+                                  if (result != null) {
+                                    setState(() {
+                                      selectedFileName = result.name;
+                                      isFileSelected = true;
+                                      _imagePath = File(result.path);
+                                    });
+                                  }
+                                },
+                                icon: Icon(Icons.image)),
+                            // h2,
+                            Text("Gallery")
+                          ],
+                        )
                       ],
-                    ),                  
-                    Column(
-                      children: [
-                        IconButton(onPressed: () async{
-                          final result = await imagePicker.pickImage(
-                                          source: ImageSource.gallery);
-                                      if (result != null) {
-                                        setState(() {
-                                          selectedFileName = result.name;
-                                          isFileSelected = true;
-                                          _imagePath = File(result.path);
-                                        });
-                                      }
-                        }, icon: Icon(Icons.image)),
-                       // h2,
-                        Text("Gallery")
-                      ],
-                    )
-                  ],);
-                  },            
+                    );
+                  },
                 ),
                 h15,
 
-//HospitalName Field                
+//HospitalName Field
                 CustomTextField(
                   inputDecoration: InputDecoration(
                     hintText: "Enter Hospital Name",
                     labelText: 'Hospital Name',
                     border: OutlineInputBorder(),
                     focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.black26)),
+                        borderSide: BorderSide(color: Colors.black26)),
                   ),
                   controller: _hospitalnameController,
                   onSaved: (value) {
@@ -180,7 +184,7 @@ class _HospitalRegistrationState extends State<HospitalRegistration> {
                     labelText: 'Liscence NUmber',
                     border: OutlineInputBorder(),
                     focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.black26)),
+                        borderSide: BorderSide(color: Colors.black26)),
                   ),
                   controller: _liscencenumberController,
                   onSaved: (value) {
@@ -203,7 +207,7 @@ class _HospitalRegistrationState extends State<HospitalRegistration> {
                     labelText: 'Email',
                     border: OutlineInputBorder(),
                     focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.black26)),
+                        borderSide: BorderSide(color: Colors.black26)),
                   ),
                   controller: _emailController,
                   onSaved: (value) {
@@ -217,17 +221,17 @@ class _HospitalRegistrationState extends State<HospitalRegistration> {
                     return null;
                   },
                 ),
-               h10,
+                h10,
 //Phonenumber field
-                  CustomTextField(
+                CustomTextField(
                   inputDecoration: InputDecoration(
-                    hintText: "Enter Password",
-                    labelText: 'Password',
+                    hintText: "Enter Phone Number",
+                    labelText: 'Phone',
                     border: OutlineInputBorder(),
                     focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.black26)),
+                        borderSide: BorderSide(color: Colors.black26)),
                   ),
-                  controller: _passwordController,
+                  controller: _phoneController,
                   onSaved: (value) {
                     // You can access the input value using _controller1.text
                     print('Input 1: $value');
@@ -247,7 +251,7 @@ class _HospitalRegistrationState extends State<HospitalRegistration> {
                     labelText: 'Pin Code',
                     border: OutlineInputBorder(),
                     focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.black26)),
+                        borderSide: BorderSide(color: Colors.black26)),
                   ),
                   controller: _pinController,
                   onSaved: (value) {
@@ -263,38 +267,38 @@ class _HospitalRegistrationState extends State<HospitalRegistration> {
                 ),
                 h10,
 //Address section
-              CSCPicker(
-              onCountryChanged: (value) {
-                List<String> myValue = value.split(" ");
-                country = myValue[1];
-                print(country);
-              },
-              onStateChanged: (value) {
-                if (value != null) {
-                  state = value;
-                  print(state);
-                } else {
-                  return;
-                }
-              },
-              onCityChanged: (value) {
-                if (value != null) {
-                  city = value;
-                } else {
-                  return;
-                }
-              },
-            ),                
-            h10,
+                CSCPicker(
+                  onCountryChanged: (value) {
+                    List<String> myValue = value.split(" ");
+                    country = myValue[1];
+                    print(country);
+                  },
+                  onStateChanged: (value) {
+                    if (value != null) {
+                      state = value;
+                      print(state);
+                    } else {
+                      return;
+                    }
+                  },
+                  onCityChanged: (value) {
+                    if (value != null) {
+                      city = value;
+                    } else {
+                      return;
+                    }
+                  },
+                ),
+                h10,
 
 //StreetAddress field
-              CustomTextField(
+                CustomTextField(
                   inputDecoration: InputDecoration(
                     hintText: "Enter Street Line",
                     labelText: 'Street Line',
                     border: OutlineInputBorder(),
                     focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.black26)),
+                        borderSide: BorderSide(color: Colors.black26)),
                   ),
                   controller: _addressLineController,
                   onSaved: (value) {
@@ -307,20 +311,21 @@ class _HospitalRegistrationState extends State<HospitalRegistration> {
                     }
                     return null;
                   },
-                ),  
+                ),
                 h20,
 
 //Registration Button
                 Container(
-                  height: 50,
-                  width: 250,
-                  decoration: BoxDecoration(
-                    border: Border.all(),
-                    borderRadius: BorderRadius.circular(30)
-                  ),
-                  child: ElevatedButton(onPressed: () async{
-                    await regClicked(context);
-                  }, child: Text("Register")))                     
+                    height: 50,
+                    width: 250,
+                    decoration: BoxDecoration(
+                        border: Border.all(),
+                        borderRadius: BorderRadius.circular(30)),
+                    child: ElevatedButton(
+                        onPressed: () async {
+                          await regClicked(context);
+                        },
+                        child: Text("Register")))
               ],
             ),
           ),
@@ -331,87 +336,86 @@ class _HospitalRegistrationState extends State<HospitalRegistration> {
 
   //Email verification alert
   AlertDialog buildEmailVerificationDialog() {
-  return AlertDialog(
-    title: Text("Email Verification"),
-    content: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Text(
-          "Verification email has been sent. Please check your email and click the 'Verified' button once done.",
-        ),
-        SizedBox(height: 10),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            TextButton(
-              onPressed: () async {
-                // Wait for the email verification to complete
-               await FirebaseAuth.instance.currentUser!.reload();
-               final user = FirebaseAuth.instance.currentUser;
-                if (user!.emailVerified) {
+    return AlertDialog(
+      title: Text("Email Verification"),
+      content: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text(
+            "Verification email has been sent. Please check your email and click the 'Verified' button once done.",
+          ),
+          SizedBox(height: 10),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              TextButton(
+                onPressed: () async {
+                  // Wait for the email verification to complete
+                  await FirebaseAuth.instance.currentUser!.reload();
+                  final user = FirebaseAuth.instance.currentUser;
+                  if (user!.emailVerified) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text("Registered successfully"),
+                        backgroundColor: Colors.blue,
+                        behavior: SnackBarBehavior.floating,
+                        margin: EdgeInsets.all(10),
+                        duration: Duration(seconds: 5),
+                      ),
+                    );
+
+                    Navigator.of(context).pushReplacement(
+                      MaterialPageRoute(builder: (context) {
+                        return Successfullyregistered();
+                      }),
+                    );
+                  } else {
+                    // Show a message indicating that the email is not verified
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text(
+                          "Email is not verified. Please verify your email before logging in.",
+                        ),
+                        backgroundColor: Colors.red,
+                        behavior: SnackBarBehavior.floating,
+                        margin: EdgeInsets.all(10),
+                        duration: Duration(seconds: 8),
+                      ),
+                    );
+                  }
+                },
+                child: Text("Verified"),
+              ),
+              TextButton(
+                onPressed: () async {
+                  // Resend email verification
+                  final user = FirebaseAuth.instance.currentUser;
+                  await user!.sendEmailVerification();
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
-                      content: Text("Registered successfully"),
+                      content: Text("Verification email resent."),
                       backgroundColor: Colors.blue,
                       behavior: SnackBarBehavior.floating,
                       margin: EdgeInsets.all(10),
                       duration: Duration(seconds: 5),
                     ),
                   );
+                },
+                child: Text("Resend"),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
 
-                  Navigator.of(context).pushReplacement(
-                    MaterialPageRoute(builder: (context) {
-                      return Successfullyregistered();
-                    }),
-                  );
-                } else {
-                  // Show a message indicating that the email is not verified
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text(
-                        "Email is not verified. Please verify your email before logging in.",
-                      ),
-                      backgroundColor: Colors.red,
-                      behavior: SnackBarBehavior.floating,
-                      margin: EdgeInsets.all(10),
-                      duration: Duration(seconds: 8),
-                    ),
-                  );
-                }
-              },
-              child: Text("Verified"),
-            ),
-            TextButton(
-              onPressed: () async {
-                // Resend email verification
-                final user = FirebaseAuth.instance.currentUser;
-                await user!.sendEmailVerification();
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
-                    content: Text("Verification email resent."),
-                    backgroundColor: Colors.blue,
-                    behavior: SnackBarBehavior.floating,
-                    margin: EdgeInsets.all(10),
-                    duration: Duration(seconds: 5),
-                  ),
-                );
-              },
-              child: Text("Resend"),
-            ),
-          ],
-        ),
-      ],
-    ),
-  );
-}
-
-  regClicked(BuildContext context) async{
-
+  regClicked(BuildContext context) async {
     print("hi");
 
-     print("Selcted image : $_imagePath");
-     print("Selcted image : ${_imagePath!.path}");
+    print("Selcted image : $_imagePath");
+    print("Selcted image : ${_imagePath!.path}");
     // print("hname : ${_hospitalnameController.text}");
     // print("liscence : ${_liscencenumberController.text}");
     // print("email : ${_emailController.text}");
@@ -422,21 +426,23 @@ class _HospitalRegistrationState extends State<HospitalRegistration> {
     // print("City : $city");
     // print("password : ${_passwordController.text}");
 
-    final hospital =await HospitalregModel(
-      imagePath: _imagePath!,
-      hname: _hospitalnameController.text, 
-      liscenceNum: _liscencenumberController.text,
-      email: _emailController.text, 
-      addressLine: _addressLineController.text, 
-      pinCode: _pinController.text,
-      country: "Bharat", state: state, city: city, 
-      password: _passwordController.text);
+    final hospital = await HospitalregModel(
+        imagePath: _imagePath!,
+        hname: _hospitalnameController.text,
+        liscenceNum: _liscencenumberController.text,
+        email: _emailController.text,
+        addressLine: _addressLineController.text,
+        pinCode: _pinController.text,
+        country: "Bharat",
+        state: state,
+        city: city,
+        phone: _phoneController.text);
 
-   // final hos = HospitalregModel(imagePath: imagebytes!, hname: "s", liscenceNum: "s", email: "s", addressLine: "s", pinCode: "s", country: "s", state: "s", city: "s", password: "s");
-    String status = await hospitalregistration(hospital); 
+    // final hos = HospitalregModel(imagePath: imagebytes!, hname: "s", liscenceNum: "s", email: "s", addressLine: "s", pinCode: "s", country: "s", state: "s", city: "s", password: "s");
+    String status = await hospitalregistration(hospital);
     print(status);
     // if (status == true) {
     //   RegistrationCheck();
-    // } 
+    // }
   }
 }

@@ -19,7 +19,7 @@ class _HospitalHomeState extends State<HospitalHome> {
   void initState() {
     super.initState();
     // Start the timer when the widget is initialized
-    _timer = Timer(Duration(seconds: 20), () {
+    _timer = Timer(Duration(seconds: 5), () {
       if (!isRegistrationCompleted) {
         setState(() {
           _showPopup = true;
@@ -47,7 +47,8 @@ class _HospitalHomeState extends State<HospitalHome> {
               // Show the popup if registration is not completed and 20 seconds have passed
               AlertDialog(
                 title: Text("Registration Reminder"),
-                content: Text("Your registration is not completed yet. Please complete your profile add Specialisation and Doctors then only users can see your hospital"),
+                content: Text(
+                    "Your registration is not completed yet. Please complete your profile add Specialisation and Doctors then only users can see your hospital"),
                 actions: [
                   Row(
                     children: [
@@ -56,19 +57,19 @@ class _HospitalHomeState extends State<HospitalHome> {
                           setState(() {
                             _showPopup = false;
                           });
-                      
-                         // Navigator.of(context).push(MaterialPageRoute(builder: (ctx)=>CheckBoxWidget3()));
+
+                          // Navigator.of(context).push(MaterialPageRoute(builder: (ctx)=>CheckBoxWidget3()));
                         },
                         child: Text("Close"),
                       ),
-                      
                       TextButton(
                         onPressed: () {
                           setState(() {
                             _showPopup = false;
                           });
-                      
-                          Navigator.of(context).push(MaterialPageRoute(builder: (ctx)=>CheckBoxWidget3()));
+
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (ctx) => CheckBoxWidget3()));
                         },
                         child: Text("Complete Profile"),
                       ),

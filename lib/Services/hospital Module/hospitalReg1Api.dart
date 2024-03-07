@@ -1,19 +1,16 @@
-
 import 'dart:convert';
 import 'package:easydiagno/Constants/Colors.dart';
 import 'package:easydiagno/Models/HospitalModel/hospitalReg1Model.dart';
 import 'package:http/http.dart' as http;
 
-
 Future<String> hospitalregistration(HospitalregModel item) async {
-
   final address = jsonEncode({
-      "AddressLine": item.addressLine,
-      "PinCode": item.pinCode,
-      "Country": "Bharat",
-      "City": item.city,
-      "State": item.state
-    });
+    "AddressLine": item.addressLine,
+    "PinCode": item.pinCode,
+    "Country": "Bharat",
+    "City": item.city,
+    "State": item.state
+  });
   try {
     var request = http.MultipartRequest(
       'POST',
@@ -22,16 +19,16 @@ Future<String> hospitalregistration(HospitalregModel item) async {
 
     request.fields['HospitalName'] = item.hname;
     request.fields['Email'] = item.email;
-    request.fields['LiscenceNumber'] = item.liscenceNum; 
+    request.fields['LiscenceNumber'] = item.liscenceNum;
     request.fields['Address'] = address;
-    request.fields['password'] = item.password;
+    request.fields['phone'] = item.phone;
     request.files.add(await http.MultipartFile.fromPath(
       'img',
       item.imagePath.path,
     ));
 
     var response = await request.send();
-    if (response.statusCode == 200 || response.statusCode == 201 ) {
+    if (response.statusCode == 200 || response.statusCode == 201) {
       print('Menu item added successfully');
       return "success";
     } else {
@@ -43,10 +40,3 @@ Future<String> hospitalregistration(HospitalregModel item) async {
     return "failed";
   }
 }
-
-
-
-
-
-
-

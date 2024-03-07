@@ -1,7 +1,7 @@
 //Main Hospital reg
 import 'dart:io';
 
-class HospitalregModel{
+class HospitalregModel {
   final File imagePath;
   final String hname;
   final String liscenceNum;
@@ -11,15 +11,23 @@ class HospitalregModel{
   final String country;
   final String state;
   final String city;
-  final String password;
+  final String phone;
 
-  HospitalregModel({
-    required this.imagePath,required this.hname, required this.liscenceNum, required this.email, required this.addressLine, required this.pinCode, required this.country, required this.state, required this.city, required this.password});
+  HospitalregModel(
+      {required this.imagePath,
+      required this.hname,
+      required this.liscenceNum,
+      required this.email,
+      required this.addressLine,
+      required this.pinCode,
+      required this.country,
+      required this.state,
+      required this.city,
+      required this.phone});
 }
 
-
 //add specialization model
-class Specialization{
+class Specialization {
   final String hospitalId;
   final List<String> specialization;
 
@@ -52,7 +60,9 @@ class Doctors {
       hospitalId: json['hospitalId'] ?? '',
       doctorName: json['doctorName'] ?? '',
       qualification: json['qualification'] ?? '',
-      availableDays: json['availableDays'] != null ? List<String>.from(json['availableDays']) : [],
+      availableDays: json['availableDays'] != null
+          ? List<String>.from(json['availableDays'])
+          : [],
     );
   }
 
