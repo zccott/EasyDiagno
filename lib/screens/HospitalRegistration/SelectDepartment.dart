@@ -1,4 +1,5 @@
 import 'package:easydiagno/Constants/Colors.dart';
+import 'package:easydiagno/Constants/constants.dart';
 import 'package:easydiagno/Models/HospitalModel/getSpecialisation.dart';
 import 'package:easydiagno/screens/HospitalRegistration/addDoctorScreen.dart';
 import 'package:flutter/material.dart';
@@ -34,42 +35,76 @@ class _CheckBoxWidgetState extends State<CheckBoxWidget3> {
     var h = MediaQuery.of(context).size.height;
     var w = MediaQuery.of(context).size.width;
     return Scaffold(
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        key: UniqueKey(),
-        children: [
-          Text(
-            "Select Specialisation",
-            style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
-          ),
-          SizedBox(height: 15),
-          Container(
-            width: w * 0.6,
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  buildGroupselectionCheckbox(selectAllItems),
-                  ...listtitles.map(buildCheckBox),
-                ],
+      body: SafeArea(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          //mainAxisAlignment: m,
+          key: UniqueKey(),
+          children: [
+            h10,
+            const Center(
+              child: Text(
+                "Select Specialisation",
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
             ),
-          ),
-          SizedBox(height: 15),
-          TextButton(
-            onPressed: () {
-              checkedSpecialisations.value = listtitles
-                  .where((specialisation) => specialisation.selected)
-                  .toList();
-              Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) => DoctorSection2(
-                    specialization: checkedSpecialisations.value),
-              ));
-              print(checkedSpecialisations.value[0].specialisationid);
-              // Call a method or navigate to another screen passing the selected specialisations
-            },
-            child: Text("Next"),
-          )
-        ],
+            SizedBox(height: 15),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20),
+                  color: Color.fromARGB(255, 196, 195, 192),
+                ),
+                width: w * 1,
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      buildGroupselectionCheckbox(selectAllItems),
+                      ...listtitles.map(buildCheckBox),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+            SizedBox(height: 15),
+            Expanded(
+              child: Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Container(
+                      width: 200,
+                      child: ElevatedButton(
+                        onPressed: () {
+                          checkedSpecialisations.value = listtitles
+                              .where(
+                                  (specialisation) => specialisation.selected)
+                              .toList();
+                          Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => DoctorSection2(
+                                specialization: checkedSpecialisations.value),
+                          ));
+                          print(
+                              checkedSpecialisations.value[0].specialisationid);
+                          // Call a method or navigate to another screen passing the selected specialisations
+                        },
+                        child: Text(
+                          "Next",
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ),
+                    h10,
+                  ],
+                ),
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
@@ -105,10 +140,13 @@ class _CheckBoxWidgetState extends State<CheckBoxWidget3> {
   }
 
   void getSpecialisations() async {
+    print("get s[pec called");
     try {
+      print("get s[pec called try");
       final response = await http.get(Uri.parse('$baseUrl/viewspecialisation'));
       print(response.body);
       if (response.statusCode == 200) {
+        print("get s[pec called 200");
         final List<dynamic> data = jsonDecode(response.body);
         setState(() {
           listtitles = data

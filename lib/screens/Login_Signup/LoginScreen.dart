@@ -8,6 +8,7 @@ import 'package:easydiagno/widgets/Textfields/customTextField.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginScreen extends StatefulWidget {
   LoginScreen({super.key});
@@ -44,6 +45,8 @@ class _LoginScreenState extends State<LoginScreen> {
               return HomeScreen();
             }));
           } else if (check.type == "hospital") {
+            final shared = await SharedPreferences.getInstance();
+            shared.setBool("isProfileCompleted", false);
             Navigator.of(context)
                 .pushReplacement(MaterialPageRoute(builder: (context) {
               return HospitalHome();
