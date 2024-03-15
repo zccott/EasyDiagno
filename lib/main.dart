@@ -31,7 +31,8 @@ class MyApp extends StatelessWidget {
         home:
             //WelcomeScreen()
             //SplashScreen()
-            //HomeScreen()
-            HospitalHome());
+            HomeScreen()
+        //HospitalHome()
+        );
   }
 }

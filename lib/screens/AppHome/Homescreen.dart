@@ -131,6 +131,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   sendMessage(String text) async {
+    print("symptom : $text");
     if (text.isEmpty) {
       print('Message is empty');
     } else {
@@ -139,7 +140,7 @@ class _HomeScreenState extends State<HomeScreen> {
         // addMessage(text, true);
       });
 
-      final responce = await msges(_controller.text);
+      final responce = await msges(text);
       if (responce != null) {
         print("responce 2 : ${responce.task}");
         String rply = responce.task.toString();
@@ -213,7 +214,7 @@ class _HomeScreenState extends State<HomeScreen> {
       } else if (systemMsg[systemMsg.length - 1] ==
           "Confirm your symptoms, send Yes/No") {
         if (userMsg[userMsg.length - 1].toLowerCase() == "yes") {
-          await sendMessage(userMsg[userMsg.length - 1]);
+          await sendMessage(userMsg[userMsg.length - 2]);
         } else if (userMsg[userMsg.length - 1].toLowerCase() == "no") {
           systemMsg.add('Send your symptoms');
           await addMessage("Send your symptoms");

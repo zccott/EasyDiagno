@@ -21,7 +21,7 @@ class HospitalHome extends StatefulWidget {
 class _HospitalHomeState extends State<HospitalHome> {
   ValueNotifier isLoading = ValueNotifier(true);
   ValueNotifier isFound = ValueNotifier(false);
-  bool profileStatus = true;
+  bool profileStatus = false;
   List<HospitalBaseModel> model = [];
   List<HospitalAllDetailsModel> hospitalFull = [];
 
