@@ -1,5 +1,6 @@
 import 'package:easydiagno/Models/UserModel/loginModel.dart';
 import 'package:easydiagno/Models/UserModel/loginResponce.dart';
+import 'package:easydiagno/Models/constantShared.dart';
 import 'package:easydiagno/Services/UserModule/userLogin.dart';
 import 'package:easydiagno/screens/AppHome/Homescreen.dart';
 import 'package:easydiagno/screens/HospitalRegistration/hospitalHome.dart';
@@ -31,7 +32,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
       await FirebaseAuth.instance.signInWithEmailAndPassword(
           email: emailController.text, password: passworController.text);
-      //await loginCheck();
+
       final user = FirebaseAuth.instance.currentUser;
       if (user!.emailVerified) {
         print("email is verified");
@@ -49,12 +50,16 @@ class _LoginScreenState extends State<LoginScreen> {
             shared.setBool("isProfileCompleted", false);
             Navigator.of(context)
                 .pushReplacement(MaterialPageRoute(builder: (context) {
-              return HospitalHome();
+              return HospitalHome(
+                status: profileStatus!,
+              );
             }));
           } else if (check.type == "admin") {
             Navigator.of(context)
                 .pushReplacement(MaterialPageRoute(builder: (context) {
-              return HospitalHome();
+              return HospitalHome(
+                status: profileStatus!,
+              );
             }));
           } else if (check.type == "pending") {
             ScaffoldMessenger.of(context).showSnackBar(SnackBar(
@@ -282,8 +287,8 @@ class _LoginScreenState extends State<LoginScreen> {
                           if (_formkey.currentState!.validate()) {
                             print('clicked');
                             //checkLogin(context);
-                            await loginCheck();
-                            //apiCall();
+                            //await loginCheck();
+                            apiCall();
                           }
                         },
                         child: Text("Login",
@@ -358,9 +363,37 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  apiCall() {
+  apiCall() async {
     final loginDetails = UserLoginmodel(
         email: emailController.text, password: passworController.text);
-    userLoginApi(loginDetails);
+    userType = await userLoginApi(loginDetails);
+    await sharedPrefFunc();
+    if (userType!.type == "hospital") {
+      Navigator.of(context).push(MaterialPageRoute(
+        builder: (context) => HospitalHome(
+          status: profileStatus!,
+        ),
+      ));
+    }
+    if (userType!.type == "user") {
+      Navigator.of(context).push(MaterialPageRoute(
+        builder: (context) => HomeScreen(),
+      ));
+    }
+  }
+
+  sharedPrefFunc() async {
+    print(profileStatus);
+    final shared = await SharedPreferences.getInstance();
+    await shared.setInt("lid", userType!.lid);
+    lid = shared.getInt("lid");
+    if (shared.getBool("hospstatus") == null) {
+      await shared.setBool("hospstatus", false);
+      profileStatus = shared.getBool("hospstatus");
+      print("pro status : $profileStatus");
+    } else {
+      await shared.setBool("hospstatus", false);
+      profileStatus = await shared.getBool("hospstatus");
+    }
   }
 }

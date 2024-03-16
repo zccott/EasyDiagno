@@ -3,13 +3,14 @@ import 'dart:convert';
 import 'package:easydiagno/Constants/Colors.dart';
 import 'package:easydiagno/Models/HospitalModel/HospitalAllDetails.dart';
 import 'package:easydiagno/Models/HospitalModel/hospitalBaseModel.dart';
+import 'package:easydiagno/Models/constantShared.dart';
 import 'package:http/http.dart' as http;
 
 Future<List<HospitalAllDetailsModel>?> getFullHospitaldetailsById() async {
   print("here");
   try {
     final response =
-        await http.get(Uri.parse('$baseUrl/viewhospital?hospital_id=10'));
+        await http.get(Uri.parse('$baseUrl/viewhospital?hospital_id=$lid'));
     print(response.body);
     print(response.statusCode);
 

@@ -29,7 +29,7 @@ Future<String> hospitalregistration(HospitalregModel item) async {
 
     var response = await request.send();
     if (response.statusCode == 200 || response.statusCode == 201) {
-      print('Menu item added successfully');
+      print('Hospital added successfully');
       return "success";
     } else {
       print('Failed to add menu item: ${response.statusCode}');

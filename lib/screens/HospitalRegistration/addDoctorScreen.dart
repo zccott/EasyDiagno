@@ -1,9 +1,12 @@
 import 'package:easydiagno/Constants/constants.dart';
 import 'package:easydiagno/Models/HospitalModel/getSpecialisation.dart';
 import 'package:easydiagno/Models/HospitalModel/hospitalReg1Model.dart';
+import 'package:easydiagno/Models/constantShared.dart';
 import 'package:easydiagno/Services/hospital%20Module/addDoctorApi.dart';
+import 'package:easydiagno/screens/HospitalRegistration/hospitalHome.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class DoctorSection2 extends StatefulWidget {
   final List<Specialisation> specialization;
@@ -16,6 +19,8 @@ class DoctorSection2 extends StatefulWidget {
   @override
   State<DoctorSection2> createState() => _DoctorSectionState();
 }
+
+ValueNotifier<bool> isClicked = ValueNotifier(false);
 
 class _DoctorSectionState extends State<DoctorSection2> {
   Map<String, TextEditingController> doctorControllers =
@@ -47,14 +52,39 @@ class _DoctorSectionState extends State<DoctorSection2> {
           h15,
           ElevatedButton(
               onPressed: () async {
+                await submitFunc();
                 print(widget.specialization);
                 print(allAddedDoctors);
-                await addDoctorApi(allAddedDoctors, widget.specialization);
               },
-              child: Text("Submit"))
+              child: ValueListenableBuilder(
+                valueListenable: isClicked,
+                builder: (context, value, child) {
+                  return isClicked.value
+                      ? Center(child: CircularProgressIndicator())
+                      : Text("Submit");
+                },
+              ))
         ],
       ),
     );
+  }
+
+  submitFunc() async {
+    isClicked.value = true;
+    final status = await addDoctorApi(allAddedDoctors, widget.specialization);
+    if (status == true) {
+      final shared = await SharedPreferences.getInstance();
+      final st = await shared.setBool("hospstatus", true);
+      profileStatus = st;
+      print("status : $st");
+      isClicked.value = false;
+      allAddedDoctors.clear();
+      Navigator.of(context).push(MaterialPageRoute(
+        builder: (context) => HospitalHome(status: profileStatus!),
+      ));
+    } else {
+      isClicked.value = false;
+    }
   }
 }
 

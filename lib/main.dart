@@ -1,6 +1,7 @@
 import 'package:easydiagno/screens/AppHome/Homescreen.dart';
 import 'package:easydiagno/screens/AppHome/ProfileScreen.dart';
 import 'package:easydiagno/screens/HospitalRegistration/hospitalHome.dart';
+import 'package:easydiagno/screens/Login_Signup/LoginScreen.dart';
 import 'package:easydiagno/screens/Login_Signup/SplashScreen.dart';
 import 'package:easydiagno/screens/Login_Signup/WelcomeScreen.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -29,6 +30,8 @@ class MyApp extends StatelessWidget {
         //darkTheme: ThemeData.dark(),
         //themeMode: ThemeMode.system,
         home:
+
+            //LoginScreen()
             //WelcomeScreen()
             //SplashScreen()
             HomeScreen()

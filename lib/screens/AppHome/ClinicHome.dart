@@ -8,7 +8,8 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 class ClinicHome extends StatefulWidget {
-  ClinicHome({super.key});
+  String? department;
+  ClinicHome({super.key, this.department});
 
   @override
   State<ClinicHome> createState() => _ClinicHomeState();

@@ -3,17 +3,19 @@ import 'package:easydiagno/Constants/Colors.dart';
 import 'package:easydiagno/Constants/constants.dart';
 import 'package:easydiagno/Models/HospitalModel/HospitalAllDetails.dart';
 import 'package:easydiagno/Models/HospitalModel/hospitalBaseModel.dart';
+import 'package:easydiagno/Models/constantShared.dart';
 import 'package:easydiagno/Services/hospital%20Module/getFullDetailsById.dart';
 import 'package:easydiagno/Services/hospital%20Module/getHospitalByid.dart';
 import 'package:easydiagno/screens/HospitalRegistration/SelectDepartment.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-final imageUrl = "$baseUrl/static/";
-bool isRegistrationCompleted = true;
+final imageUrl = "$baseUrl/static/hospital/";
+//bool isRegistrationCompleted = false;
 
 class HospitalHome extends StatefulWidget {
-  HospitalHome({Key? key}) : super(key: key);
+  final bool status;
+  HospitalHome({Key? key, required this.status}) : super(key: key);
   @override
   _HospitalHomeState createState() => _HospitalHomeState();
 }
@@ -21,7 +23,7 @@ class HospitalHome extends StatefulWidget {
 class _HospitalHomeState extends State<HospitalHome> {
   ValueNotifier isLoading = ValueNotifier(true);
   ValueNotifier isFound = ValueNotifier(false);
-  bool profileStatus = false;
+  late ValueNotifier<bool> st;
   List<HospitalBaseModel> model = [];
   List<HospitalAllDetailsModel> hospitalFull = [];
 
@@ -32,7 +34,15 @@ class _HospitalHomeState extends State<HospitalHome> {
     initcall();
   }
 
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    initcall();
+    print("called");
+  }
+
   initcall() async {
+    print("pro $profileStatus");
     if (profileStatus == false) {
       final res = await hospitalById();
       if (res != null) {
@@ -61,10 +71,7 @@ class _HospitalHomeState extends State<HospitalHome> {
   }
 
   getStatus() async {
-    final shared = await SharedPreferences.getInstance();
-    final status = shared.getBool("isProfileCompleted");
-    print(status);
-    //profileStatus = status!;
+    print(lid!);
   }
 
   @override
@@ -78,7 +85,7 @@ class _HospitalHomeState extends State<HospitalHome> {
             child: CircularProgressIndicator(),
           );
         } else if (isLoading.value == false) {
-          return profileStatus
+          return widget.status
               ? Padding(
                   padding: const EdgeInsets.only(left: 10, right: 10),
                   child: ListView(

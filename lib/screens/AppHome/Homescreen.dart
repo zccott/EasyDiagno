@@ -1,3 +1,5 @@
+import 'package:easydiagno/Models/constantShared.dart';
+import 'package:easydiagno/Services/UserModule/getHospitalbySpec.dart';
 import 'package:easydiagno/Services/UserModule/masgeReplyApi.dart';
 import 'package:easydiagno/screens/AppHome/ChatBotScreen.dart';
 import 'package:easydiagno/screens/AppHome/ClinicHome.dart';
@@ -143,18 +145,18 @@ class _HomeScreenState extends State<HomeScreen> {
       final responce = await msges(text);
       if (responce != null) {
         print("responce 2 : ${responce.task}");
-        String rply = responce.task.toString();
+        List<String> rply = responce.task.split("#");
+        department = rply[1];
         print("rply : $rply");
 
-        // systemMsg.add(rply);
         setState(() {
-          addMessage(rply);
-
+          addMessage(rply[0]);
           addButton(ElevatedButton(
               onPressed: () {
-                Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => ClinicHome(),
-                ));
+                hospitalByCategory(department!);
+                // Navigator.of(context).push(MaterialPageRoute(
+                //   builder: (context) => ClinicHome(),
+                // ));
               },
               child: Text("View Hospitals")));
         });
