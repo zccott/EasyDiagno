@@ -205,6 +205,7 @@ class _ClinicHomeState extends State<ClinicHome> {
       if (response.statusCode == 200) {
         final List<dynamic> data = jsonDecode(response.body);
         setState(() {
+          print(response.body);
           listtitles = data
               .map((item) => Specialisation(
                     description: item['description'],

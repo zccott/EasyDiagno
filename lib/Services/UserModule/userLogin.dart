@@ -23,6 +23,7 @@ Future<LoginResponce?> userLoginApi(UserLoginmodel userlogin) async {
       return null;
     }
   } catch (e) {
+    print(e);
     return null;
   }
 }

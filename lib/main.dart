@@ -1,3 +1,4 @@
+import 'package:easydiagno/screens/Admin/AdminHome.dart';
 import 'package:easydiagno/screens/AppHome/Homescreen.dart';
 import 'package:easydiagno/screens/AppHome/ProfileScreen.dart';
 import 'package:easydiagno/screens/HospitalRegistration/hospitalHome.dart';
@@ -29,13 +30,12 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(primaryColor: Colors.blue),
         //darkTheme: ThemeData.dark(),
         //themeMode: ThemeMode.system,
-        home:
-
-            //LoginScreen()
-            //WelcomeScreen()
-            //SplashScreen()
-            HomeScreen()
+        home: LoginScreen()
+        //WelcomeScreen()
+        //SplashScreen()
+        // HomeScreen()
         //HospitalHome()
+        //AdminHome()
         );
   }
 }

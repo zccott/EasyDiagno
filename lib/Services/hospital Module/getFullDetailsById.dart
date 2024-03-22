@@ -9,8 +9,8 @@ import 'package:http/http.dart' as http;
 Future<List<HospitalAllDetailsModel>?> getFullHospitaldetailsById() async {
   print("here");
   try {
-    final response =
-        await http.get(Uri.parse('$baseUrl/viewhospital?hospital_id=$lid'));
+    final response = await http
+        .get(Uri.parse('$baseUrl/viewdocterbyhospitalid?hospital_id=$lid'));
     print(response.body);
     print(response.statusCode);
 

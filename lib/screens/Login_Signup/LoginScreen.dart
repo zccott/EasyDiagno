@@ -2,6 +2,7 @@ import 'package:easydiagno/Models/UserModel/loginModel.dart';
 import 'package:easydiagno/Models/UserModel/loginResponce.dart';
 import 'package:easydiagno/Models/constantShared.dart';
 import 'package:easydiagno/Services/UserModule/userLogin.dart';
+import 'package:easydiagno/screens/Admin/AdminHome.dart';
 import 'package:easydiagno/screens/AppHome/Homescreen.dart';
 import 'package:easydiagno/screens/HospitalRegistration/hospitalHome.dart';
 import 'package:easydiagno/screens/Login_Signup/SignupScreen.dart';
@@ -378,6 +379,11 @@ class _LoginScreenState extends State<LoginScreen> {
     if (userType!.type == "user") {
       Navigator.of(context).push(MaterialPageRoute(
         builder: (context) => HomeScreen(),
+      ));
+    }
+    if (userType!.type == "admin") {
+      Navigator.of(context).push(MaterialPageRoute(
+        builder: (context) => AdminHome(),
       ));
     }
   }
