@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:easydiagno/Constants/Colors.dart';
 import 'package:easydiagno/Models/HospitalModel/HospitalAllDetails.dart';
-import 'package:easydiagno/Models/HospitalModel/hospitalBaseModel.dart';
 import 'package:easydiagno/Models/constantShared.dart';
 import 'package:http/http.dart' as http;
 
@@ -11,7 +10,7 @@ Future<List<HospitalAllDetailsModel>?> getFullHospitaldetailsById() async {
   try {
     final response = await http
         .get(Uri.parse('$baseUrl/viewdocterbyhospitalid?hospital_id=$lid'));
-    print(response.body);
+    print("hospital responce : ${response.body}");
     print(response.statusCode);
 
     if (response.statusCode == 200) {

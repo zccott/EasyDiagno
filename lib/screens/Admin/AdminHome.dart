@@ -1,5 +1,9 @@
+import 'package:easydiagno/Models/AdminModel/allHospitalModel.dart';
 import 'package:easydiagno/Models/AdminModel/hospitalReqModel.dart';
+import 'package:easydiagno/Models/AdminModel/usersbyadminModel.dart';
+import 'package:easydiagno/Services/AdminModule/vieallHospital.dart';
 import 'package:easydiagno/Services/AdminModule/viewHosRequest.dart';
+import 'package:easydiagno/Services/AdminModule/viewUserApi.dart';
 import 'package:easydiagno/screens/Admin/HospitalRegistered.dart';
 import 'package:easydiagno/screens/Admin/HospitalRequested.dart';
 import 'package:easydiagno/screens/Admin/UserRegistered.dart';
@@ -13,7 +17,11 @@ class AdminHome extends StatefulWidget {
 }
 
 List<HospitalRequestModel> requests = [];
+List<HospitalBaseModel> hospitalss = [];
+List<UsersByAdmin> userss = [];
 bool isFound = false;
+bool isUserFound = false;
+bool isHosFound = false;
 
 class _AdminHomeState extends State<AdminHome> {
   int _index = 0;
@@ -28,7 +36,8 @@ class _AdminHomeState extends State<AdminHome> {
 
   @override
   void initState() {
-    apicall();
+    initApiCalls();
+    //apicall();
     // TODO: implement initState
     super.initState();
   }
@@ -71,20 +80,62 @@ class _AdminHomeState extends State<AdminHome> {
     );
   }
 
+  initApiCalls() async {
+    await apicall();
+    await userapicall();
+    await hospitalapicall();
+  }
+
   apicall() async {
     isLoading.value = true;
     final res = await hospitalRequestApi();
     if (res != null) {
       requests = res;
       if (requests.isEmpty) {
-        isFound = false;
+        //isFound = false;
         isLoading.value = false;
       } else {
-        isFound = true;
+        //isFound = true;
         isLoading.value = false;
       }
     } else {
-      isFound = false;
+      //isFound = false;
+      isLoading.value = false;
+    }
+  }
+
+  userapicall() async {
+    isLoading.value = true;
+    final res = await viewUsersApi();
+    if (res != null) {
+      userss = res;
+      if (requests.isEmpty) {
+        isUserFound = false;
+        isLoading.value = false;
+      } else {
+        isUserFound = true;
+        isLoading.value = false;
+      }
+    } else {
+      isUserFound = false;
+      isLoading.value = false;
+    }
+  }
+
+  hospitalapicall() async {
+    isLoading.value = true;
+    final res = await viewhospitalsApi();
+    if (res != null) {
+      hospitalss = res;
+      if (requests.isEmpty) {
+        isHosFound = false;
+        isLoading.value = false;
+      } else {
+        isHosFound = true;
+        isLoading.value = false;
+      }
+    } else {
+      isHosFound = false;
       isLoading.value = false;
     }
   }

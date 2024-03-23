@@ -43,13 +43,14 @@ class _HospitalHomeState extends State<HospitalHome> {
 
   initcall() async {
     print("pro $profileStatus");
+    print("my model: $model");
     if (profileStatus == false) {
       print("calles 1");
-      final res = await getFullHospitaldetailsById(); //hospitalById(); //
+      final res = await hospitalById(); //
 
       if (res != null) {
         print("here2");
-        // model = res;
+        model = res;
         isLoading.value = false;
         isFound.value = true;
       } else {

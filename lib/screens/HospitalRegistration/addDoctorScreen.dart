@@ -219,7 +219,7 @@ class _DocSubSectionState extends State<DocSubSection> {
                                   .toString(),
                               specialisation:
                                   widget.spec.specialisationid.toString(),
-                              hospitalId: '10',
+                              hospitalId: lid.toString(),
                               doctorName: doctornameController.text,
                               qualification: qualificationController.text,
                               availableDays: widget.doctorDetails.selectedDays);

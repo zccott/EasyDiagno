@@ -24,6 +24,7 @@ class HospitalBaseModel {
   int phoneNumber;
   int pincode;
   String state;
+  String type;
 
   HospitalBaseModel({
     required this.addressLine,
@@ -38,6 +39,7 @@ class HospitalBaseModel {
     required this.phoneNumber,
     required this.pincode,
     required this.state,
+    required this.type,
   });
 
   factory HospitalBaseModel.fromJson(Map<String, dynamic> json) =>
@@ -54,6 +56,7 @@ class HospitalBaseModel {
         phoneNumber: json["phone_number"],
         pincode: json["pincode"],
         state: json["state"],
+        type: json["type"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -69,5 +72,6 @@ class HospitalBaseModel {
         "phone_number": phoneNumber,
         "pincode": pincode,
         "state": state,
+        "type": type,
       };
 }

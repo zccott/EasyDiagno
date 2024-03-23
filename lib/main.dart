@@ -30,8 +30,9 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(primaryColor: Colors.blue),
         //darkTheme: ThemeData.dark(),
         //themeMode: ThemeMode.system,
-        home: LoginScreen()
-        //WelcomeScreen()
+        home:
+            //LoginScreen()
+            WelcomeScreen()
         //SplashScreen()
         // HomeScreen()
         //HospitalHome()
