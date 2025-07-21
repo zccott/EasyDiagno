@@ -1,11 +1,16 @@
-import 'package:easydiagno/Models/UserModel/userLogin.dart';
+import 'package:easydiagno/Models/UserModel/loginModel.dart';
+import 'package:easydiagno/Models/UserModel/loginResponce.dart';
+import 'package:easydiagno/Models/constantShared.dart';
 import 'package:easydiagno/Services/UserModule/userLogin.dart';
+import 'package:easydiagno/screens/Admin/AdminHome.dart';
 import 'package:easydiagno/screens/AppHome/Homescreen.dart';
+import 'package:easydiagno/screens/HospitalRegistration/hospitalHome.dart';
 import 'package:easydiagno/screens/Login_Signup/SignupScreen.dart';
-import 'package:easydiagno/widgets/Textfields/CustomTextField.dart';
+import 'package:easydiagno/widgets/Textfields/customTextField.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginScreen extends StatefulWidget {
   LoginScreen({super.key});
@@ -21,16 +26,75 @@ class _LoginScreenState extends State<LoginScreen> {
 
 //Firebase login
   loginCheck() async {
+    print('here');
     try {
+      print("inside login try");
+      //await FirebaseAuth.instance.currentUser!.reload();
+
       await FirebaseAuth.instance.signInWithEmailAndPassword(
           email: emailController.text, password: passworController.text);
-      await loginCheck();
 
-       Navigator.of(context)
-          .pushReplacement(MaterialPageRoute(builder: (context) {
-        return HomeScreen();
-      }));
-
+      final user = FirebaseAuth.instance.currentUser;
+      if (user!.emailVerified) {
+        print("email is verified");
+        final userModel = UserLoginmodel(
+            email: emailController.text, password: passworController.text);
+        final check = await userLoginApi(userModel);
+        if (check != null) {
+          if (check.type == "user") {
+            Navigator.of(context)
+                .pushReplacement(MaterialPageRoute(builder: (context) {
+              return HomeScreen();
+            }));
+          } else if (check.type == "hospital") {
+            final shared = await SharedPreferences.getInstance();
+            shared.setBool("isProfileCompleted", false);
+            Navigator.of(context)
+                .pushReplacement(MaterialPageRoute(builder: (context) {
+              return HospitalHome(
+                status: profileStatus!,
+              );
+            }));
+          } else if (check.type == "admin") {
+            Navigator.of(context)
+                .pushReplacement(MaterialPageRoute(builder: (context) {
+              return HospitalHome(
+                status: profileStatus!,
+              );
+            }));
+          } else if (check.type == "pending") {
+            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                content: Text("waiting for admin approval for your hospital"),
+                backgroundColor: Colors.red,
+                behavior: SnackBarBehavior.floating,
+                margin: EdgeInsets.all(10),
+                duration: Duration(seconds: 8)));
+          } else {
+            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                content: Text("Something went wrong, please try again"),
+                backgroundColor: Colors.red,
+                behavior: SnackBarBehavior.floating,
+                margin: EdgeInsets.all(10),
+                duration: Duration(seconds: 8)));
+          }
+        }
+      } else {
+        print("not verified");
+        final user = FirebaseAuth.instance.currentUser;
+        await user!.sendEmailVerification();
+        showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return buildEmailVerificationDialog();
+            });
+        // buildEmailVerificationDialog();
+        // ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        //     content: Text("Email is not verified"),
+        //     backgroundColor: Colors.red,
+        //     behavior: SnackBarBehavior.floating,
+        //     margin: EdgeInsets.all(10),
+        //     duration: Duration(seconds: 8)));
+      }
     } on FirebaseAuthException catch (e) {
       if (e.code == 'invalid-credential') {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
@@ -42,6 +106,87 @@ class _LoginScreenState extends State<LoginScreen> {
       }
       //print("Error :    ---- ${e.code}");
     }
+  }
+
+  //Email verification alert
+  AlertDialog buildEmailVerificationDialog() {
+    return AlertDialog(
+      title: Text("Email Verification"),
+      content: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text(
+            "Your email is not verified.Verification email has been sent. Please check your email and click the 'Verified' button once done.",
+          ),
+          SizedBox(height: 10),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              TextButton(
+                onPressed: () async {
+                  // Wait for the email verification to complete
+                  await FirebaseAuth.instance.currentUser!.reload();
+                  final user = FirebaseAuth.instance.currentUser;
+                  if (user!.emailVerified) {
+                    // Email is verified, proceed with registration
+                    //await apiRequest();
+
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text("Registered successfully"),
+                        backgroundColor: Colors.blue,
+                        behavior: SnackBarBehavior.floating,
+                        margin: EdgeInsets.all(10),
+                        duration: Duration(seconds: 5),
+                      ),
+                    );
+
+                    Navigator.of(context).pushReplacement(
+                      MaterialPageRoute(builder: (context) {
+                        return LoginScreen();
+                      }),
+                    );
+                  } else {
+                    // Show a message indicating that the email is not verified
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text(
+                          "Email is not verified. Please verify your email before logging in.",
+                        ),
+                        backgroundColor: Colors.red,
+                        behavior: SnackBarBehavior.floating,
+                        margin: EdgeInsets.all(10),
+                        duration: Duration(seconds: 8),
+                      ),
+                    );
+                  }
+                },
+                child: Text("Verified"),
+              ),
+              TextButton(
+                onPressed: () async {
+                  // Resend email verification
+                  final user = FirebaseAuth.instance.currentUser;
+                  await user!.sendEmailVerification();
+
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text("Verification email resent."),
+                      backgroundColor: Colors.blue,
+                      behavior: SnackBarBehavior.floating,
+                      margin: EdgeInsets.all(10),
+                      duration: Duration(seconds: 5),
+                    ),
+                  );
+                },
+                child: Text("Resend"),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
   }
 
   final _formkey = GlobalKey<FormState>();
@@ -95,11 +240,9 @@ class _LoginScreenState extends State<LoginScreen> {
                         Icon(Icons.mail), (value) {
                       if (value == "") {
                         return "Field can't be empty";
-                      }
-                      else if(isValidEmail(value!) == false){
+                      } else if (isValidEmail(value!) == false) {
                         return "Enter a valid email";
-                      }
-                       else {
+                      } else {
                         return null;
                       }
                     }),
@@ -123,11 +266,9 @@ class _LoginScreenState extends State<LoginScreen> {
                         Icon(Icons.lock), (value) {
                       if (value == "") {
                         return "Field can't be empty";
-                      } 
-                       else if (value!.length < 6) {
+                      } else if (value!.length < 6) {
                         return "password must contain atleast 6 characters";
-                      }
-                      else {
+                      } else {
                         return null;
                       }
                     }),
@@ -141,10 +282,14 @@ class _LoginScreenState extends State<LoginScreen> {
                       height: 55,
                       width: double.infinity,
                       child: ElevatedButton(
-                        onPressed: () {
+                        onPressed: () async {
+                          print('clicked');
+                          //apiCall();
                           if (_formkey.currentState!.validate()) {
+                            print('clicked');
                             //checkLogin(context);
-                            loginCheck();
+                            //await loginCheck();
+                            apiCall();
                           }
                         },
                         child: Text("Login",
@@ -219,8 +364,42 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  apiCall(){
-    final loginDetails = UserLoginmodel(email: emailController.text, password: passworController.text);
-    userLoginApi(loginDetails);
+  apiCall() async {
+    final loginDetails = UserLoginmodel(
+        email: emailController.text, password: passworController.text);
+    userType = await userLoginApi(loginDetails);
+    await sharedPrefFunc();
+    if (userType!.type == "hospital") {
+      Navigator.of(context).push(MaterialPageRoute(
+        builder: (context) => HospitalHome(
+          status: profileStatus!,
+        ),
+      ));
+    }
+    if (userType!.type == "user") {
+      Navigator.of(context).push(MaterialPageRoute(
+        builder: (context) => HomeScreen(),
+      ));
+    }
+    if (userType!.type == "admin") {
+      Navigator.of(context).push(MaterialPageRoute(
+        builder: (context) => AdminHome(),
+      ));
+    }
+  }
+
+  sharedPrefFunc() async {
+    print(profileStatus);
+    final shared = await SharedPreferences.getInstance();
+    await shared.setInt("lid", userType!.lid);
+    lid = shared.getInt("lid");
+    if (shared.getBool("hospstatus") == null) {
+      await shared.setBool("hospstatus", false);
+      profileStatus = shared.getBool("hospstatus");
+      print("pro status : $profileStatus");
+    } else {
+      await shared.setBool("hospstatus", false);
+      profileStatus = await shared.getBool("hospstatus");
+    }
   }
 }

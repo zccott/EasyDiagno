@@ -13,12 +13,11 @@ class SignupScreen extends StatefulWidget {
   State<SignupScreen> createState() => _SignupScreenState();
 }
 
-  //email validation
-  bool isValidEmail(String email) {
-    return RegExp(r'^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$')
-        .hasMatch(email);
-  }
-
+//email validation
+bool isValidEmail(String email) {
+  return RegExp(r'^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$')
+      .hasMatch(email);
+}
 
 class _SignupScreenState extends State<SignupScreen> {
   final username_controller_signup = TextEditingController();
@@ -34,23 +33,17 @@ class _SignupScreenState extends State<SignupScreen> {
               email: email_controller_signup.text,
               password: password_controller_signup1.text);
       userAuth.user!.sendEmailVerification();
-      await apiRequest();
-
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-        content: Text("Registered successfully"),
-        backgroundColor: Colors.blue,
-        behavior: SnackBarBehavior.floating,
-        margin: EdgeInsets.all(10),
-        duration: Duration(seconds: 5),
-      ));
-      Navigator.of(context)
-          .pushReplacement(MaterialPageRoute(builder: (context) {
-        return LoginScreen();
-      }));
+      // await apiRequest();
+      //await userAuth.user!.reload();
+      showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return buildEmailVerificationDialog();
+          });
       //print("successfully registered");
     } on FirebaseAuthException catch (e) {
       if (e.code == 'email-already-in-use') {
-        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
           content: Text("Email already Exists"),
           backgroundColor: Colors.red,
           behavior: SnackBarBehavior.floating,
@@ -123,7 +116,7 @@ class _SignupScreenState extends State<SignupScreen> {
                       return null;
                     },
                   ),
-                  const SizedBox(
+                  SizedBox(
                     height: 10,
                   ),
                   buildTextField(
@@ -142,7 +135,7 @@ class _SignupScreenState extends State<SignupScreen> {
                       return null;
                     },
                   ),
-                  const SizedBox(
+                  SizedBox(
                     height: 10,
                   ),
                   buildTextField(
@@ -206,7 +199,8 @@ class _SignupScreenState extends State<SignupScreen> {
                     child: ElevatedButton(
                       onPressed: () {
                         if (_formkey.currentState!.validate()) {
-                          RegistrationCheck();
+                          apiRequest();
+                          //RegistrationCheck();
                         }
                       },
                       style: ButtonStyle(
@@ -228,12 +222,14 @@ class _SignupScreenState extends State<SignupScreen> {
                   ),
                   Row(
                     children: [
-                      SizedBox(
-                        width: width / 2.6,
-                        child: const Divider(
-                          height: 1,
-                          thickness: 1,
-                          color: Colors.black,
+                      Expanded(
+                        child: SizedBox(
+                          width: width / 2.6,
+                          child: const Divider(
+                            height: 1,
+                            thickness: 1,
+                            color: Colors.black,
+                          ),
                         ),
                       ),
                       const Padding(
@@ -276,12 +272,104 @@ class _SignupScreenState extends State<SignupScreen> {
     );
   }
 
-  apiRequest() {
+  //Email verification alert
+  AlertDialog buildEmailVerificationDialog() {
+    return AlertDialog(
+      title: Text("Email Verification"),
+      content: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text(
+            "Verification email has been sent. Please check your email and click the 'Verified' button once done.",
+          ),
+          SizedBox(height: 10),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              TextButton(
+                onPressed: () async {
+                  // Wait for the email verification to complete
+                  await FirebaseAuth.instance.currentUser!.reload();
+                  final user = FirebaseAuth.instance.currentUser;
+                  if (user!.emailVerified) {
+                    // Email is verified, proceed with registration
+                    //await apiRequest();
+
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text("Registered successfully"),
+                        backgroundColor: Colors.blue,
+                        behavior: SnackBarBehavior.floating,
+                        margin: EdgeInsets.all(10),
+                        duration: Duration(seconds: 5),
+                      ),
+                    );
+
+                    Navigator.of(context).pushReplacement(
+                      MaterialPageRoute(builder: (context) {
+                        return LoginScreen();
+                      }),
+                    );
+                  } else {
+                    // Show a message indicating that the email is not verified
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text(
+                          "Email is not verified. Please verify your email before logging in.",
+                        ),
+                        backgroundColor: Colors.red,
+                        behavior: SnackBarBehavior.floating,
+                        margin: EdgeInsets.all(10),
+                        duration: Duration(seconds: 8),
+                      ),
+                    );
+                  }
+                },
+                child: Text("Verified"),
+              ),
+              TextButton(
+                onPressed: () async {
+                  // Resend email verification
+                  final user = FirebaseAuth.instance.currentUser;
+                  await user!.sendEmailVerification();
+
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text("Verification email resent."),
+                      backgroundColor: Colors.blue,
+                      behavior: SnackBarBehavior.floating,
+                      margin: EdgeInsets.all(10),
+                      duration: Duration(seconds: 5),
+                    ),
+                  );
+                },
+                child: Text("Resend"),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  apiRequest() async {
     final details = UserRegistrationModel(
         email: email_controller_signup.text,
         password: password_controller_signup1.text,
         name: username_controller_signup.text);
 
-    userRegistrationApi(details);
+    final status = await userRegistrationApi(details);
+    print(status);
+    if (status == true) {
+      RegistrationCheck();
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text("Something went wrong, please try again"),
+          backgroundColor: Colors.red,
+          behavior: SnackBarBehavior.floating,
+          margin: EdgeInsets.all(10),
+          duration: Duration(seconds: 8)));
+    }
   }
 }

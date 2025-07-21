@@ -1,9 +1,15 @@
+import 'dart:convert';
+
+import 'package:easydiagno/Constants/Colors.dart';
+import 'package:easydiagno/Models/HospitalModel/getSpecialisation.dart';
 import 'package:easydiagno/screens/AppHome/ClinicPage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 
 class ClinicHome extends StatefulWidget {
-  ClinicHome({super.key});
+  String? department;
+  ClinicHome({super.key, this.department});
 
   @override
   State<ClinicHome> createState() => _ClinicHomeState();
@@ -11,6 +17,25 @@ class ClinicHome extends StatefulWidget {
 
 class _ClinicHomeState extends State<ClinicHome> {
   String? categoryInitial;
+  List<Specialisation> listtitles = [];
+
+  // List<String> categoryList = [
+  //   'Allergy Immunology',
+  //   'Anesthesiology',
+  //   'Dermatology',
+  //   'Emergency Medicine',
+  //   'Endocrinology',
+  //   'Neurology',
+  //   'Gynecology',
+  //   'Ophthalmology',
+  //   'Orthopedics',
+  //   'Otolaryngology',
+  //   'Pediatrics',
+  //   'Psychiatry',
+  //   'Surgery',
+  //   'Urology',
+  // ];
+
 
   List<String> categoryList = [
     'Anesthesiology',
@@ -34,6 +59,13 @@ class _ClinicHomeState extends State<ClinicHome> {
     "National Hospital",
     "Metro International cardiac care Hospital"
   ];
+
+  @override
+  void initState() {
+    super.initState();
+    getSpecialisations();
+  }
+
   @override
   Widget build(BuildContext context) {
     var height = MediaQuery.of(context).size.height;
@@ -143,9 +175,9 @@ class _ClinicHomeState extends State<ClinicHome> {
             DropdownButton(
               hint: Text("Select Category"),
               value: categoryInitial,
-              items: categoryList.map((e) {
+              items: listtitles.map((e) {
                 return DropdownMenuItem(
-                  child: Text(e),
+                  child: Text(e.specialisation),
                   value: e,
                 );
               }).toList(),
@@ -181,5 +213,29 @@ class _ClinicHomeState extends State<ClinicHome> {
         );
       },
     );
+  }
+
+  void getSpecialisations() async {
+    try {
+      final response = await http.get(Uri.parse('$baseUrl/viewspecialisation'));
+      print(response.body);
+      if (response.statusCode == 200) {
+        final List<dynamic> data = jsonDecode(response.body);
+        setState(() {
+          print(response.body);
+          listtitles = data
+              .map((item) => Specialisation(
+                    description: item['description'],
+                    specialisation: item['specialisation'],
+                    specialisationid: item['specialisationid'],
+                  ))
+              .toList();
+        });
+      } else {
+        print('Failed to load specialisations');
+      }
+    } catch (e) {
+      print("exceptin : $e");
+    }
   }
 }

@@ -37,6 +37,8 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_svg: ^2.0.9
+  image_picker:
+  shared_preferences:
   url_launcher: ^6.2.5
   
 

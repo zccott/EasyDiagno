@@ -11,4 +11,4 @@ Color c2 = Color.fromARGB(255, 2, 9, 10);
 Color c3 = Color.fromARGB(255, 17, 124, 90);
 Color lt = Color.fromARGB(255, 237, 239, 240);
 
-const String baseUrl = "http://192.168.1.104:5000";
+const String baseUrl = "http://192.168.1.77:5000";
