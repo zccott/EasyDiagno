@@ -1,14 +1,21 @@
+
 import 'package:easydiagno/screens/Admin/AdminHome.dart';
+
+import 'package:easydiagno/map.dart';
+
 import 'package:easydiagno/screens/AppHome/Homescreen.dart';
 import 'package:easydiagno/screens/AppHome/ProfileScreen.dart';
 import 'package:easydiagno/screens/HospitalRegistration/hospitalHome.dart';
 import 'package:easydiagno/screens/Login_Signup/LoginScreen.dart';
 import 'package:easydiagno/screens/Login_Signup/SplashScreen.dart';
+
 import 'package:easydiagno/screens/Login_Signup/WelcomeScreen.dart';
+
+import 'package:easydiagno/screens/AppHome/ClinicPage.dart';
+
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
-// const SAVE_KEY = "userloggedin";
 void main() async {
   await WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
@@ -30,6 +37,7 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(primaryColor: Colors.blue),
         //darkTheme: ThemeData.dark(),
         //themeMode: ThemeMode.system,
+
         home:
             //LoginScreen()
             WelcomeScreen()
@@ -37,6 +45,10 @@ class MyApp extends StatelessWidget {
         // HomeScreen()
         //HospitalHome()
         //AdminHome()
+
+        home: HomeScreen()
+        //ClinicPage(),
+
         );
   }
 }

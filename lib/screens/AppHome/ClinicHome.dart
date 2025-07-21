@@ -36,6 +36,23 @@ class _ClinicHomeState extends State<ClinicHome> {
   //   'Urology',
   // ];
 
+
+  List<String> categoryList = [
+    'Anesthesiology',
+    'Dermatology',
+    'Emergency Medicine',
+    'Endocrinology',
+    'Neurology',
+    'General Physician',
+    'Gynecology',
+    'Ophthalmology',
+    'Orthopedics',
+    'Otolaryngology',
+    'Pediatrics',
+    'Psychiatry',
+    'Surgery',
+    'Urology',
+  ];
   List hospital_names = [
     "Baby Memorial Hospital (BMH)",
     "Kozhikode Medical College",

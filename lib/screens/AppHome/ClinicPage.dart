@@ -1,10 +1,6 @@
 import 'package:easydiagno/Constants/constants.dart';
 import 'package:flutter/material.dart';
 
-final mylist = [1, 2, 3, 4, 5];
-final mylist1 = [1, 2, 3];
-final mylist2 = [1, 2, 3, 4, 5, 6, 7];
-
 class ClinicPage extends StatelessWidget {
   const ClinicPage({super.key});
 
@@ -26,24 +22,34 @@ class ClinicPage extends StatelessWidget {
               height: 180,
               width: double.infinity,
               color: Colors.yellow,
+              child: Image.network(
+                'https://www.bestdocapp.com/wp-content/uploads/2022/07/BMH-Baby-Memorial-Hospital-Calicut..jpg',
+                fit: BoxFit.cover,
+              ),
             ),
             h15,
             Container(
               width: 300,
               height: 240,
               decoration: const BoxDecoration(
-                  color: Colors.red,
+                  //color: Colors.red,
                   borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(25),
                       topRight: Radius.circular(25))),
               child: Column(
                 children: [
+                  h10,
                   Container(
                     width: 300,
                     height: 135,
                     decoration: BoxDecoration(
                         color: Colors.green,
-                        borderRadius: BorderRadius.circular(25)),
+                        borderRadius: BorderRadius.circular(30),
+                        image: DecorationImage(
+                            fit: BoxFit.cover,
+                            image: NetworkImage(
+                              'https://i.stack.imgur.com/HILmr.png',
+                            ))),
                   ),
                   const Padding(
                     padding: EdgeInsets.only(
@@ -94,81 +100,92 @@ class ClinicPage extends StatelessWidget {
                 ],
               ),
             ),
-            for (int i = 0; i < mylist.length; i++)
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Column(
-                  children: [
-                    Container(
+            SizedBox(
+              height: 10,
+            ),
+            Expanded(
+              child: ListView.separated(
+                  shrinkWrap: true,
+                  physics: NeverScrollableScrollPhysics(),
+                  itemBuilder: (ctx, index) {
+                    return Container(
+                      height: 280,
+                      width: double.infinity,
                       decoration: BoxDecoration(
-                          color: Colors.amber,
+                          color: Color.fromARGB(255, 220, 231, 232),
                           borderRadius: BorderRadius.circular(20)),
-                      height: 300,
-                      child: ListTile(
-                        title: Column(
+                      child: Padding(
+                        padding:
+                            const EdgeInsets.only(left: 20, right: 20, top: 20),
+                        child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Center(child: Text("Category")),
-                            for (int i = 0; i < mylist1.length; i++)
-                              Column(
-                                children: [
-                                  Container(
-                                    height: 35,
-                                    child: ListTile(
-                                      title: Text("halo"),
-                                    ),
-                                  )
-                                ],
+                            const Center(
+                              child: Text(
+                                "Category",
+                                style: TextStyle(
+                                    //color: Colors.white,
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold),
                               ),
-                            SizedBox(
-                              height: 20,
                             ),
-                            Text('Available days'),
-                            h5,
+                            h15,
                             Expanded(
-                              child: Padding(
-                                padding: const EdgeInsets.only(bottom: 15),
-                                child: GridView.builder(
-                                  itemBuilder: (ctx, index) {
-                                    return Text('data');
-                                  },
-                                  itemCount: 7,
-                                  gridDelegate:
-                                      SliverGridDelegateWithFixedCrossAxisCount(
-                                          childAspectRatio: 3.5,
-                                          crossAxisCount: 3),
-                                ),
+                              child: ListView.builder(
+                                shrinkWrap: true,
+                                physics: const NeverScrollableScrollPhysics(),
+                                itemBuilder: (ctx, index) {
+                                  return const Text(
+                                    "halo",
+                                    style: TextStyle(
+                                        //color: Colors.white,
+                                        ),
+                                  );
+                                },
+                                itemCount: 4,
                               ),
-                            )
-                            // for (int i = 0; i < mylist2.length; i++)
-                            //   Column(
-                            //     children: [
-                            //       Container(
-                            //         height: 20,
-                            //         child: ListTile(
-                            //           title: Text("names"),
-                            //         ),
-                            //       )
-                            //     ],
-                            //   ),
+                            ),
+                            const Center(
+                                child: Text(
+                              "Available days",
+                              style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                                //color: Colors.white,
+                              ),
+                            )),
+                            h10,
+                            Expanded(
+                              child: GridView.builder(
+                                gridDelegate:
+                                    const SliverGridDelegateWithFixedCrossAxisCount(
+                                        crossAxisCount: 3,
+                                        childAspectRatio: 3.8),
+                                shrinkWrap: true,
+                                physics: const NeverScrollableScrollPhysics(),
+                                itemBuilder: (ctx, index) {
+                                  return const Text(
+                                    "monday",
+                                    style: TextStyle(
+                                        //color: Colors.white,
+                                        ),
+                                  );
+                                },
+                                itemCount: 7,
+                              ),
+                            ),
                           ],
                         ),
                       ),
-                    ),
-                    SizedBox(
+                    );
+                  },
+                  separatorBuilder: (ctx, index) {
+                    return const SizedBox(
                       height: 5,
-                    )
-                  ],
-                ),
-              )
-            // Container(
-            //   height: 100,
-            //   width: 100,
-            //   color: Colors.red,
-            //   child: Column(
-            //     children: [Text("halo"), Divider()],
-            //   ),
-            // )
+                    );
+                  },
+                  itemCount: 6),
+            )
           ],
         ),
       )),
