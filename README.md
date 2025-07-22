@@ -1,240 +1,63 @@
 # EasyDiagno
 
-A new Flutter project for symptom checking and finding nearby hospitals.
+A Flutter application designed to assist users with symptom checking and locating nearby hospitals.
 
 ## Features
 
-- **Symptom Checker:** Users can input their symptoms and get a possible diagnosis based on a machine learning model.
-- **Nearby Hospitals:** Users can find hospitals near their location.
-- **User Authentication:** Users can create an account and log in to the app.
-- **Hospital Registration:** Hospitals can register their services on the app.
-- **Admin Module:** An admin module to manage registered hospitals and users.
+-   **Symptom Checker (AI-Powered Chatbot):** Users can input their symptoms into an interactive chatbot that provides a possible diagnosis based on a machine learning model. The chatbot can also suggest relevant hospital departments.
+-   **Hospital Locator:** Users can find hospitals near their location, filtered by specialization or department.
+-   **User Authentication:** Secure user registration and login functionality.
+-   **Hospital Registration:** Hospitals can register their services and details on the platform.
+-   **Admin Module:** A dedicated module for administrators to manage registered users and hospitals, including approval/rejection of hospital registration requests.
+-   **User Profiles:** Users can manage their profiles within the application.
 
 ## Tech Stack
 
-- **Frontend:** Flutter
-- **Backend:** Firebase (Authentication, Firestore)
-- **Machine Learning:** Python, Scikit-learn (for the symptom checker model)
+-   **Frontend:** Flutter (Dart)
+-   **Backend:** Firebase (Authentication, Firestore for data storage)
+-   **Machine Learning:** Python (for the symptom checker model, likely integrated via an API)
+-   **Location Services:** Integration for finding nearby hospitals.
+-   **HTTP:** For API communication.
 
 ## Getting Started
 
-1. **Clone the repository:**
-   ```bash
-   git clone https://github.com/zccott/EasyDiagno.git
-   ```
-2. **Install dependencies:**
-   ```bash
-   flutter pub get
-   ```
-3. **Run the app:**
-   ```bash
-   flutter run
-   ```
+1.  **Clone the repository:**
+    ```bash
+    git clone https://github.com/zccott/EasyDiagno.git
+    ```
+2.  **Install dependencies:**
+    ```bash
+    flutter pub get
+    ```
+3.  **Run the app:**
+    ```bash
+    flutter run
+    ```
+    *Note: Ensure you have Flutter and Dart SDKs installed and configured.*
 
 ## Project Structure
 
 ```
-├───.gitignore
-├───.metadata
-├───analysis_options.yaml
-├───pubspec.lock
-├───pubspec.yaml
-├───README.md
-├───.git/...
-├───ai/
-│   ├───Deasease.ipynb
-│   ├───DentalDux.zip
-│   └───Symptom2Disease.csv
-├───android/
-│   ├───.gitignore
-│   ├───build.gradle
-│   ├───gradle.properties
-│   ├───settings.gradle
-│   ├───app/
-│   │   ├───build.gradle
-│   │   └───src/
-│   │       ├───google-services.json
-│   │       ├───debug/
-│   │       │   └───AndroidManifest.xml
-│   │       ├───main/
-│   │       │   ├───AndroidManifest.xml
-│   │       │   ├───kotlin/
-│   │       │   └───res/
-│   │       └───profile/
-│   │           └───AndroidManifest.xml
-│   └───gradle/
-│       └───wrapper/
-│           └───gradle-wrapper.properties
-├───assets/
-│   └───images/
-│       ├───bg.jpg
-│       ├───loading.png
-│       ├───loading1.gif
-│       └───welcome_image.svg
-├───ios/
-│   ├───.gitignore
-│   ├───Flutter/
-│   │   ├───AppFrameworkInfo.plist
-│   │   ├───Debug.xcconfig
-│   │   └───Release.xcconfig
-│   ├───Runner/
-│   │   ├───AppDelegate.swift
-│   │   ├───Info.plist
-│   │   ├───Runner-Bridging-Header.h
-│   │   ├───Assets.xcassets/
-│   │   │   ├───AppIcon.appiconset/
-│   │   │   │   ├───Contents.json
-│   │   │   │   ├───Icon-App-1024x1024@1x.png
-│   │   │   │   ├───Icon-App-20x20@1x.png
-│   │   │   │   ├───Icon-App-20x20@2x.png
-│   │   │   │   ├───Icon-App-20x20@3x.png
-│   │   │   │   ├───Icon-App-29x29@1x.png
-│   │   │   │   ├───Icon-App-29x29@2x.png
-│   │   │   │   ├───Icon-App-29x29@3x.png
-│   │   │   │   ├───Icon-App-40x40@1x.png
-│   │   │   │   ├───Icon-App-40x40@2x.png
-│   │   │   │   └───Icon-App-40x40@3x.png
-│   │   │   │   └───...
-│   │   │   └───LaunchImage.imageset/
-│   │   └───Base.lproj/
-│   │       ├───LaunchScreen.storyboard
-│   │       └───Main.storyboard
-│   ├───Runner.xcodeproj/
-│   │   ├───project.pbxproj
-│   │   ├───project.xcworkspace/
-│   │   │   ├───contents.xcworkspacedata
-│   │   │   └───xcshareddata/
-│   │   └───xcshareddata/
-│   │       └───xcschemes/
-│   ├───Runner.xcworkspace/
-│   │   ├───contents.xcworkspacedata
-│   │   └───xcshareddata/
-│   │       ├───IDEWorkspaceChecks.plist
-│   │       └───WorkspaceSettings.xcsettings
-│   └───RunnerTests/
-│       └───RunnerTests.swift
-├───lib/
-│   ├───main.dart
-│   ├───map.dart
-│   ├───Constants/
-│   │   ├───Colors.dart
-│   │   └───constants.dart
-│   ├───Models/
-│   │   ├───HospitalModel/
-│   │   │   ├───registrationDB.dart
-│   │   │   ├───regscreen1/
-│   │   │   └───regscreen2/
-│   │   └───UserModel/
-│   │       ├───userCompleteModel.dart
-│   │       ├───userLogin.dart
-│   │       └───userRegistration.dart
-│   ├───screens/
-│   │   ├───AdminModule/
-│   │   │   ├───AdminHome.dart
-│   │   │   ├───HospitalsRegistered.dart
-│   │   │   ├───HospitalsRequested.dart
-│   │   │   └───UsersRegistered.dart
-│   │   ├───AppHome/
-│   │   │   ├───ChatBotScreen.dart
-│   │   │   ├───ClinicHome.dart
-│   │   │   ├───ClinicPage.dart
-│   │   │   ├───ClinicPage1.dart
-│   │   │   ├───Homescreen.dart
-│   │   │   └───ProfileScreen.dart
-│   │   ├───HospitalRegistration/
-│   │   │   ├───hospitalRegistration.dart
-│   │   │   ├───RegisteredScreen.dart
-│   │   │   └───Registration2/
-│   │   └───Login_Signup/
-│   │       ├───LoginScreen.dart
-│   │       ├───SignupScreen.dart
-│   │       ├───SplashScreen.dart
-│   │       └───WelcomeScreen.dart
-│   ├───Services/
-│   │   └───UserModule/
-│   │       ├───userCompleteProfile.dart
-│   │       ├───userLogin.dart
-│   │       └───userRegRepo.dart
-│   └───widgets/
-│       └───Textfields/
-│           └───CustomTextField.dart
-├───linux/
-│   ├───.gitignore
-│   ├───CMakeLists.txt
-│   ├───main.cc
-│   ├───my_application.cc
-│   ├───my_application.h
-│   └───flutter/
-│       ├───CMakeLists.txt
-│       ├───generated_plugin_registrant.cc
-│       ├───generated_plugin_registrant.h
-│       └───generated_plugins.cmake
-├───macos/
-│   ├───.gitignore
-│   ├───Flutter/
-│   │   ├───Flutter-Debug.xcconfig
-│   │   ├───Flutter-Release.xcconfig
-│   │   └───GeneratedPluginRegistrant.swift
-│   ├───Runner/
-│   │   ├───AppDelegate.swift
-│   │   ├───DebugProfile.entitlements
-│   │   ├───Info.plist
-│   │   ├───MainFlutterWindow.swift
-│   │   ├───Release.entitlements
-│   │   ├───Assets.xcassets/
-│   │   │   └───AppIcon.appiconset/
-│   │   ├───Base.lproj/
-│   │   │   └───MainMenu.xib
-│   │   └───Configs/
-│   │       ├───AppInfo.xcconfig
-│   │       ├───Debug.xcconfig
-│   │       ├───Release.xcconfig
-│   │       └───Warnings.xcconfig
-│   ├───Runner.xcodeproj/
-│   │   ├───project.pbxproj
-│   │   ├───project.xcworkspace/
-│   │   │   └───xcshareddata/
-│   │   └───xcshareddata/
-│   │       └───xcschemes/
-│   ├───Runner.xcworkspace/
-│   │   ├───contents.xcworkspacedata
-│   │   └───xcshareddata/
-│   │       └───IDEWorkspaceChecks.plist
-│   └───RunnerTests/
-│       └───RunnerTests.swift
-├───test/
-│   └───widget_test.dart
-├───web/
-│   ├───favicon.png
-│   ├───index.html
-│   ├───manifest.json
-│   └───icons/
-│       ├───Icon-192.png
-│       ├───Icon-512.png
-│       ├───Icon-maskable-192.png
-│       └───Icon-maskable-512.png
-└───windows/
-    ├───.gitignore
-    ├───CMakeLists.txt
-    ├───flutter/
-    │   ├───CMakeLists.txt
-    │   ├───generated_plugin_registrant.cc
-    │   ├───generated_plugin_registrant.h
-    │   └───generated_plugins.cmake
-    └───runner/
-        ├───CMakeLists.txt
-        ├───flutter_window.cpp
-        ├───flutter_window.h
-        ├───main.cpp
-        ├───resource.h
-        ├───runner.exe.manifest
-        ├───Runner.rc
-        ├───utils.cpp
-        ├───utils.h
-        ├───win32_window.cpp
-        ├───win32_window.h
-        └───resources/
-            └───app_icon.ico
+.
+├───ai/                     # Contains machine learning models and data (e.g., symptom-to-disease mapping)
+├───android/                # Android specific project files
+├───assets/                 # Application assets like images and SVGs
+├───ios/                    # iOS specific project files
+├───lib/                    # Main Flutter application source code
+│   ├───Constants/          # Defines application-wide constants (colors, strings)
+│   ├───Models/             # Data models for users, hospitals, and other entities
+│   ├───screens/            # UI screens categorized by module (Admin, AppHome, HospitalRegistration, Login_Signup)
+│   │   ├───AdminModule/    # Screens for administrator functionalities
+│   │   ├───AppHome/        # Core application screens including chatbot and hospital listings
+│   │   ├───HospitalRegistration/ # Screens for hospital registration process
+│   │   └───Login_Signup/   # User authentication and onboarding screens
+│   ├───Services/           # API service integrations and business logic
+│   └───widgets/            # Reusable UI widgets (e.g., custom text fields)
+├───linux/                  # Linux specific project files
+├───macos/                  # macOS specific project files
+├───test/                   # Unit and widget tests
+├───web/                    # Web specific project files
+└───windows/                # Windows specific project files
 ```
 
 ## Contributing
