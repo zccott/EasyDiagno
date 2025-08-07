@@ -38,27 +38,240 @@ A Flutter application designed to assist users with symptom checking and locatin
 ## Project Structure
 
 ```
-.
-├───ai/                     # Contains machine learning models and data (e.g., symptom-to-disease mapping)
-├───android/                # Android specific project files
-├───assets/                 # Application assets like images and SVGs
-├───ios/                    # iOS specific project files
-├───lib/                    # Main Flutter application source code
-│   ├───Constants/          # Defines application-wide constants (colors, strings)
-│   ├───Models/             # Data models for users, hospitals, and other entities
-│   ├───screens/            # UI screens categorized by module (Admin, AppHome, HospitalRegistration, Login_Signup)
-│   │   ├───AdminModule/    # Screens for administrator functionalities
-│   │   ├───AppHome/        # Core application screens including chatbot and hospital listings
-│   │   ├───HospitalRegistration/ # Screens for hospital registration process
-│   │   └───Login_Signup/   # User authentication and onboarding screens
-│   ├───Services/           # API service integrations and business logic
-│   └───widgets/            # Reusable UI widgets (e.g., custom text fields)
-├───linux/                  # Linux specific project files
-├───macos/                  # macOS specific project files
-├───test/                   # Unit and widget tests
-├───web/                    # Web specific project files
-└───windows/                # Windows specific project files
+├───README.md
+├───.git/...
+├───ai/
+│   ├───Deasease.ipynb
+│   ├───DentalDux.zip
+│   └───Symptom2Disease.csv
+├───backend/
+│   ├───.idea/
+│   │   ├───.gitignore
+│   │   ├───Easydiagno.iml
+│   │   ├───misc.xml
+│   │   ├───modules.xml
+│   │   └───inspectionProfiles/
+│   │       └───profiles_settings.xml
+│   └───src/
+│       ├───__init__.py
+│       ├───easydiagnoapp.py
+│       ├───mainfile.py
+│       ├───Symptom2Disease.csv
+│       ├───__pycache__/
+│       │   ├───__init__.cpython-312.pyc
+│       │   └───mainfile.cpython-312.pyc
+│       └───static/
+│           ├───20240307_155541.jpg
+│           ├───20240309_114339.jpg
+│           ├───20240309_114729.jpg
+│           ├───20240309_114802.jpg
+│           ├───20240309_114854.jpg
+│           ├───20240309_114938.jpg
+│           └───20240309_115036.jpg
+└───mobile/
+    ├───.gitignore
+    ├───.metadata
+    ├───analysis_options.yaml
+    ├───pubspec.lock
+    ├───pubspec.yaml
+    ├───android/
+    │   ├───.gitignore
+    │   ├───build.gradle
+    │   ├───gradle.properties
+    │   ├───settings.gradle
+    │   ├───app/
+    │   │   ├───build.gradle
+    │   │   └───src/
+    │   │       ├───google-services.json
+    │   │       ├───debug/
+    │   │       ├───main/
+    │   │       └───profile/
+    │   └───gradle/
+    │       └───wrapper/
+    │           └───gradle-wrapper.properties
+    ├───assets/
+    │   └───images/
+    │       ├───bg.jpg
+    │       ├───loading.png
+    │       ├───loading1.gif
+    │       └───welcome_image.svg
+    ├───ios/
+    │   ├───.gitignore
+    │   ├───Flutter/
+    │   │   ├───AppFrameworkInfo.plist
+    │   │   ├───Debug.xcconfig
+    │   │   └───Release.xcconfig
+    │   ├───Runner/
+    │   │   ├───AppDelegate.swift
+    │   │   ├───Info.plist
+    │   │   ├───Runner-Bridging-Header.h
+    │   │   ├───Assets.xcassets/
+    │   │   │   ├───AppIcon.appiconset/
+    │   │   │   └───LaunchImage.imageset/
+    │   │   └───Base.lproj/
+    │   │       ├───LaunchScreen.storyboard
+    │   │       └───Main.storyboard
+    │   ├───Runner.xcodeproj/
+    │   │   ├───project.pbxproj
+    │   │   ├───project.xcworkspace/
+    │   │   │   ├───contents.xcworkspacedata
+    │   │   │   └───xcshareddata/
+    │   │   └───xcshareddata/
+    │   │       └───xcschemes/
+    │   ├───Runner.xcworkspace/
+    │   │   ├───contents.xcworkspacedata
+    │   │   └───xcshareddata/
+    │   │       ├───IDEWorkspaceChecks.plist
+    │   │       └───WorkspaceSettings.xcsettings
+    │   └───RunnerTests/
+    │       └───RunnerTests.swift
+    ├───lib/
+    │   ├───halo.py
+    │   ├───main.dart
+    │   ├───map.dart
+    │   ├───Constants/
+    │   │   ├───Colors.dart
+    │   │   └───constants.dart
+    │   ├───Models/
+    │   │   ├───constantShared.dart
+    │   │   ├───AdminModel/
+    │   │   │   ├───allHospitalModel.dart
+    │   │   │   ├───hospitalReqModel.dart
+    │   │   │   └───usersByAdminModel.dart
+    │   │   ├───HospitalModel/
+    │   │   │   ├───getSpecialisation.dart
+    │   │   │   ├───HospitalAllDetails.dart
+    │   │   │   ├───hospitalBaseModel.dart
+    │   │   │   ├───hospitalReg1Model.dart
+    │   │   │   ├───registrationDB.dart
+    │   │   │   ├───regscreen1/
+    │   │   │   └───regscreen2/
+    │   │   └───UserModel/
+    │   │       ├───chatReplayModel.dart
+    │   │       ├───loginModel.dart
+    │   │       ├───loginResponce.dart
+    │   │       ├───userCompleteModel.dart
+    │   │       └───userRegistration.dart
+    │   ├───screens/
+    │   │   ├───Admin/
+    │   │   │   ├───AdminHome.dart
+    │   │   │   ├───HospitalRegistered.dart
+    │   │   │   ├───HospitalRequested.dart
+    │   │   │   └───UserRegistered.dart
+    │   │   ├───AdminModule/
+    │   │   │   ├───AdminHome.dart
+    │   │   │   ├───HospitalsRegistered.dart
+    │   │   │   └───HospitalsRequested.dart
+    │   │   │   └───...
+    │   │   ├───AppHome/
+    │   │   ├───HospitalRegistration/
+    │   │   └───Login_Signup/
+    │   ├───Services/
+    │   │   ├───AdminModule/
+    │   │   ├───hospital Module/
+    │   │   └───UserModule/
+    │   └───widgets/
+    │       └───Textfields/
+    ├───linux/
+    │   ├───.gitignore
+    │   ├───CMakeLists.txt
+    │   ├───main.cc
+    │   ├───my_application.cc
+    │   ├───my_application.h
+    │   └───flutter/
+    │       ├───CMakeLists.txt
+    │       ├───generated_plugin_registrant.cc
+    │       ├───generated_plugin_registrant.h
+    │       └───generated_plugins.cmake
+    ├───macos/
+    │   ├───.gitignore
+    │   ├───Flutter/
+    │   │   ├───Flutter-Debug.xcconfig
+    │   │   ├───Flutter-Release.xcconfig
+    │   │   └───GeneratedPluginRegistrant.swift
+    │   ├───Runner/
+    │   │   ├───AppDelegate.swift
+    │   │   ├───DebugProfile.entitlements
+    │   │   ├───Info.plist
+    │   │   ├───MainFlutterWindow.swift
+    │   │   ├───Release.entitlements
+    │   │   ├───Assets.xcassets/
+    │   │   ├───Base.lproj/
+    │   │   └───Configs/
+    │   ├───Runner.xcodeproj/
+    │   │   ├───project.pbxproj
+    │   │   ├───project.xcworkspace/
+    │   │   └───xcshareddata/
+    │   ├───Runner.xcworkspace/
+    │   │   ├───contents.xcworkspacedata
+    │   │   └───xcshareddata/
+    │   └───RunnerTests/
+    │       └───RunnerTests.swift
+    ├───test/
+    │   └───widget_test.dart
+    ├───web/
+    │   ├───favicon.png
+    │   ├───index.html
+    │   ├───manifest.json
+    │   └───icons/
+    │       ├───Icon-192.png
+    │       ├───Icon-512.png
+    │       ├───Icon-maskable-192.png
+    │       └───Icon-maskable-512.png
+    └───windows/
+        ├───.gitignore
+        ├───CMakeLists.txt
+        ├───flutter/
+        │   ├───CMakeLists.txt
+        │   ├───generated_plugin_registrant.cc
+        │   ├───generated_plugin_registrant.h
+        │   └───generated_plugins.cmake
+        └───runner/
+            ├───CMakeLists.txt
+            ├───flutter_window.cpp
+            ├───flutter_window.h
+            ├───main.cpp
+            ├───resource.h
+            ├───runner.exe.manifest
+            ├───Runner.rc
+            ├───utils.cpp
+            ├───utils.h
+            ├───win32_window.cpp
+            ├───win32_window.h
+            └───resources/
 ```
+
+## API Reference
+
+The application communicates with a backend API for various functionalities. The base URL for the API is not specified in the provided code, but the following endpoints are used:
+
+**Authentication:**
+
+*   **User Login:** `http://localhost:5000/api/user/login`
+*   **User Registration:** `http://localhost:5000/api/user/register`
+*   **User Profile Completion:** `http://localhost:5000/api/user/complete/profile`
+
+**Admin:**
+
+*   **Get All Users:** `http://localhost:5000/api/admin/users`
+*   **Get All Hospitals:** `http://localhost:5000/api/admin/hospitals`
+*   **Get Hospital Requests:** `http://localhost:5000/api/admin/hospital/requests`
+*   **Approve Hospital Request:** `http://localhost:5000/api/admin/hospital/approve`
+*   **Reject Hospital Request:** `http://localhost:5000/api/admin/hospital/reject`
+*   **Delete User:** `http://localhost:5000/api/admin/user/delete`
+*   **Delete Hospital:** `http://localhost:5000/api/admin/hospital/delete`
+
+**Hospital:**
+
+*   **Register Hospital:** `http://localhost:5000/api/hospital/register`
+*   **Get Hospital by ID:** `http://localhost:5000/api/hospital/`
+*   **Get Hospital by Specialization:** `http://localhost:5000/api/hospital/specialization/`
+*   **Get All Specializations:** `http://localhost:5000/api/specializations`
+*   **Add Doctor:** `http://localhost:5000/api/hospital/add/doctor`
+
+**Chatbot:**
+
+*   **Get Chatbot Reply:** `http://localhost:5000/api/chatbot/reply`
 
 ## Contributing
 
@@ -67,3 +280,4 @@ Contributions are welcome! Please feel free to submit a pull request.
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+Comment
